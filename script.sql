@@ -1,7 +1,8 @@
+# Tables creation
 CREATE TABLE `USERS` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `name` VARCHAR(255),
-  `email` VARCHAR(255),
+  `name` VARCHAR(50),
+  `email` VARCHAR(50),
   `password` VARCHAR(255)
 );
 
@@ -33,6 +34,8 @@ CREATE TABLE `SUBSCRIPTIONS` (
   `topic_id` INT
 );
 
+
+# Relation constraints between tables
 ALTER TABLE `POSTS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
 ALTER TABLE `POSTS` ADD FOREIGN KEY (`topic_id`) REFERENCES `TOPICS` (`id`);
 ALTER TABLE `COMMENTS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
@@ -40,6 +43,8 @@ ALTER TABLE `COMMENTS` ADD FOREIGN KEY (`post_id`) REFERENCES `POSTS` (`id`);
 ALTER TABLE `SUBSCRIPTIONS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
 ALTER TABLE `SUBSCRIPTIONS` ADD FOREIGN KEY (`topic_id`) REFERENCES `TOPICS` (`id`);
 
+
+# Example values
 INSERT INTO `USERS` (`name`, `email`, `password`) VALUES
 ("gaetanls", "gaetanls@gmail.com", "azerty123");
 
