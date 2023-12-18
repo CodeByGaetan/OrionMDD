@@ -5,12 +5,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+@Data
+@NoArgsConstructor
 @Entity
-@Table(name = "topics")
+@Table(name = "topics", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
 public class Topic {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,4 +26,5 @@ public class Topic {
 
     @NonNull
     private String description;
+
 }

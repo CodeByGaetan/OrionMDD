@@ -11,11 +11,16 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "comments")
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,4 +31,5 @@ public class Comment {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+    
 }

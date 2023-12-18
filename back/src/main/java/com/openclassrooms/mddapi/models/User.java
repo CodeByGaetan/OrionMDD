@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,13 +15,14 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+@Data
+@NoArgsConstructor
 @Entity
-@Table(name = "users", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "email"),
-    @UniqueConstraint(columnNames = "name")
-})
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = { "email", "name" }))
 public class User {
 
     @Id
@@ -36,7 +36,8 @@ public class User {
     @NonNull
     private String name;
 
-    // Ajouter un validator personnalisé : minimum 8 caractères, 1 chiffre, 1 minuscule, 1 majuscule et 1 caractère special
+    // Ajouter un validator personnalisé : minimum 8 caractères, 1 chiffre, 1
+    // minuscule, 1 majuscule et 1 caractère special
     @NonNull
     @Size(min = 8)
     private String password;
