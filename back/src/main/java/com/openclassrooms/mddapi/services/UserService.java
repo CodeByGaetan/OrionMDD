@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,6 @@ public class UserService {
 
     public Optional<User> getById(Integer id) {
         return userRepository.findById(id);
-    }
-
-    public List<User> getAll() {
-        return userRepository.findAll();
     }
 
 }
