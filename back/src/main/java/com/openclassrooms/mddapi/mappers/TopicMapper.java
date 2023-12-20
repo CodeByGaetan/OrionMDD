@@ -7,5 +7,5 @@ import com.openclassrooms.mddapi.models.Topic;
 
 @Mapper(componentModel = "spring")
 public interface TopicMapper extends EntityMapper<TopicDto, Topic> {
-
+    
 }

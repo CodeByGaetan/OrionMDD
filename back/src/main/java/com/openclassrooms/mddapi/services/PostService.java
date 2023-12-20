@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repositories.PostRepository;
 
 @Service
@@ -33,10 +32,7 @@ public class PostService {
 
     public Post create(Post newPost) {
         newPost.setCreatedAt(LocalDateTime.now());
-
-        //  A MODIFIER POUR RECUPERER L'UTILISATEUR DANS LE CONTEXTE
-        User user = userService.getById(1);
-        newPost.setUser(user);
+        newPost.setUser(userService.getCurrentUser());
 
         Post savedPost = postRepository.save(newPost);
 
@@ -50,10 +46,7 @@ public class PostService {
     public Comment createCommentOnPost(Post post, Comment comment) {
         comment.setPost(post);
         comment.setCreatedAt(LocalDateTime.now());
-
-        //  A MODIFIER POUR RECUPERER L'UTILISATEUR DANS LE CONTEXTE
-        User user = userService.getById(1);
-        comment.setUser(user);
+        comment.setUser(userService.getCurrentUser());
 
         Comment savedComment = commentService.save(comment);
         return savedComment;
