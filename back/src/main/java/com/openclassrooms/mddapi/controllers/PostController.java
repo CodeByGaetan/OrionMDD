@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -33,9 +32,9 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         try {
-            Optional<Post> post = postService.getById(id);
+            Post post = postService.getById(id);
 
-            if (post.isEmpty()) {
+            if (post == null) {
                 return ResponseEntity.notFound().build();
             }
 
@@ -45,10 +44,16 @@ public class PostController {
         }
     }
 
-    // A finaliser !
     @PostMapping("/posts")
     public ResponseEntity<?> createPost(@Valid @RequestBody PostDto postDto) {
-        return ResponseEntity.ok().build();
+
+        try {
+            PostDto newPostDto = postService.create(postDto);
+            return ResponseEntity.ok().body(newPostDto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.UserService;
 
 @RestController
@@ -16,7 +17,14 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok().body(userService.getById(id));
+
+        User user = userService.getById(id);
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(user);
     }
 
 }
