@@ -11,7 +11,7 @@ import com.openclassrooms.mddapi.services.TopicService;
 import com.openclassrooms.mddapi.services.UserService;
 
 @Mapper(componentModel = "spring")
-public abstract class PostMapper {
+public abstract class PostMapper implements EntityMapper<PostDto, Post> {
 
     @Autowired
     TopicService topicService;

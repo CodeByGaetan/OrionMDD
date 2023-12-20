@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.mddapi.dto.PostDto;
-import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repositories.PostRepository;
@@ -17,9 +15,6 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepository;
-
-    @Autowired
-    private PostMapper postMapper;
 
     @Autowired
     private UserService userService;
@@ -32,13 +27,7 @@ public class PostService {
         return postRepository.findById(id).orElse(null);
     }
 
-    public PostDto create(PostDto postDto) throws Exception {
-        Post newPost = postMapper.toEntity(postDto);
-
-        if (newPost.getTopic() == null) {
-            throw new Exception("Topic from topic_id not found");
-        }
-
+    public Post create(Post newPost) {
         newPost.setCreatedAt(LocalDateTime.now());
 
         //  A MODIFIER POUR RECUPERER L'UTILISATEUR DANS LE CONTEXTE
@@ -47,6 +36,6 @@ public class PostService {
 
         Post savedPost = postRepository.save(newPost);
 
-        return postMapper.toDto(savedPost);
+        return savedPost;
     }
 }
