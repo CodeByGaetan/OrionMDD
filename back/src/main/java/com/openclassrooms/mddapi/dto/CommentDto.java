@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentDto {
 
+    @NotBlank
     private String content;
+
+    private String userName;
     
 }

@@ -20,6 +20,9 @@ public class PostService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommentService commentService;
+
     public List<Post> getAll() {
         return postRepository.findAll();
     }
@@ -42,5 +45,17 @@ public class PostService {
 
     public List<Comment> getCommentsFromPost(Post post) {
         return post.getComments();
+    }
+
+    public Comment createCommentOnPost(Post post, Comment comment) {
+        comment.setPost(post);
+        comment.setCreatedAt(LocalDateTime.now());
+
+        //  A MODIFIER POUR RECUPERER L'UTILISATEUR DANS LE CONTEXTE
+        User user = userService.getById(1);
+        comment.setUser(user);
+
+        Comment savedComment = commentService.save(comment);
+        return savedComment;
     }
 }

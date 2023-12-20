@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
@@ -40,8 +41,8 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
-        Post post = postService.getById(id);
 
+        Post post = postService.getById(id);
         if (post == null) {
             return ResponseEntity.notFound().build();
         }
@@ -53,21 +54,21 @@ public class PostController {
     public ResponseEntity<?> createPost(@Valid @RequestBody PostDto postDto) {
 
         Post newPost = postMapper.toEntity(postDto);
-
         if (newPost.getTopic() == null) {
             // throw new Exception("Topic from topic_id not found");
             return ResponseEntity.badRequest().build();
         }
 
-        Post savedPost = postService.create(newPost);
+        // Retourner l'objet ?
+        postService.create(newPost);
 
-        return ResponseEntity.ok().body(postMapper.toDto(savedPost));
+        return ResponseEntity.ok().body("Post created !");
     }
 
     @GetMapping("/posts/{id}/comments")
     public ResponseEntity<?> getCommentsFromPost(@PathVariable Integer id) {
-        Post post = postService.getById(id);
 
+        Post post = postService.getById(id);
         if (post == null) {
             return ResponseEntity.notFound().build();
         }
@@ -76,5 +77,22 @@ public class PostController {
 
         return ResponseEntity.ok().body(commentMapper.toDto(comments));
     }
+
+    @PostMapping("/posts/{id}/comments")
+    public ResponseEntity<?> createCommentOnPost(@PathVariable Integer id, @Valid @RequestBody CommentDto commentDto) {
+
+        Post post = postService.getById(id);
+        if (post == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Comment newComment = commentMapper.toEntity(commentDto);
+
+        // Retourner l'objet ?
+        postService.createCommentOnPost(post, newComment);
+
+        return ResponseEntity.ok().body("Post commented !");
+    }
+
 
 }
