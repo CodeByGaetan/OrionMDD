@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repositories.PostRepository;
@@ -37,5 +38,9 @@ public class PostService {
         Post savedPost = postRepository.save(newPost);
 
         return savedPost;
+    }
+
+    public List<Comment> getCommentsFromPost(Post post) {
+        return post.getComments();
     }
 }

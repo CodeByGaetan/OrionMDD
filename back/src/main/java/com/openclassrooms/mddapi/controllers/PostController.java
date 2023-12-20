@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
+import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.services.PostService;
 
@@ -25,6 +27,9 @@ public class PostController {
 
     @Autowired
     private PostMapper postMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
 
     @GetMapping("/posts")
     public ResponseEntity<?> getAll() {
@@ -57,6 +62,19 @@ public class PostController {
         Post savedPost = postService.create(newPost);
 
         return ResponseEntity.ok().body(postMapper.toDto(savedPost));
+    }
+
+    @GetMapping("/posts/{id}/comments")
+    public ResponseEntity<?> getCommentsFromPost(@PathVariable Integer id) {
+        Post post = postService.getById(id);
+
+        if (post == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Comment> comments = postService.getCommentsFromPost(post);
+
+        return ResponseEntity.ok().body(commentMapper.toDto(comments));
     }
 
 }
