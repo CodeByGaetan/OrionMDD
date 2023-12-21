@@ -14,8 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -34,21 +32,17 @@ public class User {
     private Integer id;
 
     @NonNull
-    @Email
     private String email;
 
     @NonNull
     private String name;
 
-    // Ajouter un validator personnalisé : minimum 8 caractères, 1 chiffre, 1
-    // minuscule, 1 majuscule et 1 caractère special
     @NonNull
-    @Size(min = 8)
     private String password;
 
     @OneToMany(mappedBy = "user")
     // Essayer d'enlever cette annotation
-    @JsonManagedReference
+    // @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
