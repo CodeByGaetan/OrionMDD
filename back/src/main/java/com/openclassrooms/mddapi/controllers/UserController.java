@@ -1,9 +1,8 @@
 package com.openclassrooms.mddapi.controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +15,7 @@ import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.UserService;
+import com.openclassrooms.mddapi.validations.groups.UpdateUserValidation;
 
 @RestController
 public class UserController {
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    public ResponseEntity<?> updateCurrentUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<?> updateCurrentUser(@Validated(UpdateUserValidation.class) @RequestBody UserDto userDto) {
         try {
             userService.updateCurrentUser(userDto);
             return ResponseEntity.ok().body("User info updated !");

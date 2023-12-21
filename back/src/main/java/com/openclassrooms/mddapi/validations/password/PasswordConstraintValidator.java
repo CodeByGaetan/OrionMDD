@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.validations;
+package com.openclassrooms.mddapi.validations.password;
 
 import java.util.Arrays;
 import java.util.List;

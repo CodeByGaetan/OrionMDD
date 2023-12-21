@@ -42,7 +42,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     // Essayer d'enlever cette annotation
-    @JsonManagedReference
+    // @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
