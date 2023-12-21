@@ -13,9 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +21,7 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = { "email", "name" }))
+@Table(name = "users")
 public class User {
 
     @Id
@@ -41,7 +38,6 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    // Essayer d'enlever cette annotation
     // @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
 

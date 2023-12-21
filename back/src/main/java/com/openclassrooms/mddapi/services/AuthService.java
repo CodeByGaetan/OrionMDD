@@ -12,9 +12,15 @@ public class AuthService {
     @Autowired
     private UserService userService;
 
-    public String signUp(UserDto userDto) {
+    public String signUp(UserDto userDto) throws Exception {
 
-        // Vérifier que l'email ou le name n'existe pas
+        if (userService.existsByEmail(userDto.getEmail())) {
+            throw new Exception("Email already used !");
+        }
+
+        if (userService.existsByName(userDto.getName())) {
+            throw new Exception("Name already used !");
+        }
 
         User newUser = new User();
         newUser.setEmail(userDto.getEmail());

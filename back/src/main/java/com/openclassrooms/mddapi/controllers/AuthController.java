@@ -27,9 +27,14 @@ public class AuthController {
     @PostMapping("/auth/signup")
     public ResponseEntity<?> signUp(@Validated(SignUpValidation.class) @RequestBody UserDto userDto) {
 
-        String jwtResponse = authService.signUp(userDto);
+        try {
+            String jwtResponse = authService.signUp(userDto);
+            return ResponseEntity.ok().body(jwtResponse);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            return ResponseEntity.badRequest().body(message);
+        }
 
-        return ResponseEntity.ok().body(jwtResponse);
     }
 
     @PostMapping("/auth/signin")
