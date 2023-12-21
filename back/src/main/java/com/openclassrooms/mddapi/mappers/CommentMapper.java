@@ -19,7 +19,7 @@ public interface CommentMapper extends EntityMapper<CommentDto, Comment> {
     public abstract Comment toEntity(CommentDto commentDto);
 
     @Mappings({
-            @Mapping(source = "user.name", target = "userName"),
+            @Mapping(source = "user.name", target = "user_name"),
     })
     public abstract CommentDto toDto(Comment comment);
 

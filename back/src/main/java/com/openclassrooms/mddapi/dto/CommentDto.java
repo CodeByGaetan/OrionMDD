@@ -12,6 +12,6 @@ public class CommentDto {
     @NotBlank
     private String content;
 
-    private String userName;
+    private String user_name;
     
 }
