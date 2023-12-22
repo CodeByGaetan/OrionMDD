@@ -28,5 +28,5 @@ public class PostDto {
 
     private LocalDateTime createdAt;
 
-    private Integer user_id;
+    private String user_name;
 }

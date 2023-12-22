@@ -74,6 +74,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    // Utiliser directement le User Repository dans AuthService ??
+
     public User saveUser(User user) {
         return userRepository.save(user);
     }
@@ -84,6 +86,14 @@ public class UserService {
 
     public User findByName(String name) {
         return userRepository.findByName(name).orElse(null);
+    }
+
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public Boolean existsByName(String name) {
+        return userRepository.existsByName(name);
     }
 
 }

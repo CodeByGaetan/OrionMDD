@@ -55,8 +55,7 @@ public class PostController {
 
         Post newPost = postMapper.toEntity(postDto);
         if (newPost.getTopic() == null) {
-            // throw new Exception("Topic from topic_id not found");
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Topic from topic_id not found");
         }
 
         // Retourner l'objet ?
@@ -93,6 +92,5 @@ public class PostController {
 
         return ResponseEntity.ok().body("Post commented !");
     }
-
 
 }

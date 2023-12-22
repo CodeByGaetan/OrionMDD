@@ -13,23 +13,23 @@ import com.openclassrooms.mddapi.services.UserService;
 @Mapper(componentModel = "spring")
 public abstract class PostMapper implements EntityMapper<PostDto, Post> {
 
-    @Autowired
-    TopicService topicService;
+        @Autowired
+        TopicService topicService;
 
-    @Autowired
-    UserService userService;
+        @Autowired
+        UserService userService;
 
-    @Mappings({
-            @Mapping(target = "topic", expression = "java( topicService.getById(postDto.getTopic_id()) )"),
-            @Mapping(target = "user", expression = "java( postDto.getUser_id() != null ? userService.getById(postDto.getUser_id()) : null )"),
-            @Mapping(target = "comments", ignore = true),
-    })
-    public abstract Post toEntity(PostDto postDto);
+        @Mappings({
+                @Mapping(target = "topic", expression = "java( topicService.getById(postDto.getTopic_id()) )"),
+                @Mapping(target = "user", ignore = true),
+                @Mapping(target = "comments", ignore = true)
+        })
+        public abstract Post toEntity(PostDto postDto);
 
-    @Mappings({
-            @Mapping(source = "topic.id", target = "topic_id"),
-            @Mapping(source = "user.id", target = "user_id"),
-    })
-    public abstract PostDto toDto(Post post);
+        @Mappings({
+                @Mapping(source = "topic.id", target = "topic_id"),
+                @Mapping(source = "user.name", target = "user_name"),
+        })
+        public abstract PostDto toDto(Post post);
 
 }
