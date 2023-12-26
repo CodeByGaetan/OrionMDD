@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.responses.MessageResponse;
 import com.openclassrooms.mddapi.services.AuthService;
 import com.openclassrooms.mddapi.validations.groups.SignInEmailValidation;
 import com.openclassrooms.mddapi.validations.groups.SignInNameValidation;
@@ -29,10 +30,10 @@ public class AuthController {
 
         try {
             String jwtResponse = authService.signUp(userDto);
-            return ResponseEntity.ok().body(jwtResponse);
+            return ResponseEntity.ok().body(new MessageResponse(jwtResponse));
         } catch (Exception e) {
             String message = e.getMessage();
-            return ResponseEntity.badRequest().body(message);
+            return ResponseEntity.badRequest().body(new MessageResponse(message));
         }
 
     }
@@ -44,12 +45,12 @@ public class AuthController {
         Boolean signInNameNotValid = !validator.validate(userDto, SignInNameValidation.class).isEmpty();
 
         if (signInEmailNotValid && signInNameNotValid) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new MessageResponse("Email, nom ou mot de passe non valide"));
         }
 
         String jwtResponse = authService.signIn(userDto);
 
-        return ResponseEntity.ok().body(jwtResponse);
+        return ResponseEntity.ok().body(new MessageResponse(jwtResponse));
     }
 
 }
