@@ -1,18 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
-import { SignInRequest } from '../interfaces/signInRequest.interface';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { SignUpRequest } from '../interfaces/signUpRequest.interface';
+import { MessageResponse } from '../interfaces/messageResponse.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
-  public signInForm = this.formBuilder.group({
+  public signUpForm = this.formBuilder.group({
+    name: [
+      '',
+      [
+        Validators.required,
+        Validators.min(3),
+        Validators.max(20)
+      ] 
+    ],
     email: [
       '',
       [
@@ -42,8 +51,8 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const signInRequest = this.signInForm.value as SignInRequest;
-    this.authService.signIn(signInRequest).subscribe({
+    const signUpRequest = this.signUpForm.value as SignUpRequest;
+    this.authService.signUp(signUpRequest).subscribe({
       next: (_: void) => {
         this.router.navigateByUrl('/');
       },
@@ -53,4 +62,5 @@ export class SignInComponent implements OnInit {
       }
     });
   }
+
 }

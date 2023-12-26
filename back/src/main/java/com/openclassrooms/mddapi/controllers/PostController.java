@@ -18,6 +18,7 @@ import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.responses.MessageResponse;
 import com.openclassrooms.mddapi.services.PostService;
 
 @RestController
@@ -55,13 +56,13 @@ public class PostController {
 
         Post newPost = postMapper.toEntity(postDto);
         if (newPost.getTopic() == null) {
-            return ResponseEntity.badRequest().body("Topic from topic_id not found");
+            return ResponseEntity.badRequest().body(new MessageResponse("Topic from topic_id not found"));
         }
 
         // Retourner l'objet ?
         postService.create(newPost);
 
-        return ResponseEntity.ok().body("Post created !");
+        return ResponseEntity.ok().body(new MessageResponse("Post created !"));
     }
 
     @GetMapping("/posts/{id}/comments")
@@ -90,7 +91,7 @@ public class PostController {
         // Retourner l'objet ?
         postService.createCommentOnPost(post, newComment);
 
-        return ResponseEntity.ok().body("Post commented !");
+        return ResponseEntity.ok().body(new MessageResponse("Post commented !"));
     }
 
 }

@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar'
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { ListPostComponent } from './list-post/list-post.component';
+import { ListTopicComponent } from './list-topic/list-topic.component';
+import { AccountComponent } from './account/account.component';
 
 const materialModules = [
   MatButtonModule,
@@ -19,13 +24,14 @@ const materialModules = [
   MatFormFieldModule,
   MatInputModule,
   MatIconModule,
+  MatToolbarModule
 ];
 
 @NgModule({
   declarations: [
     AppComponent, 
     HomeComponent, 
-    SignInComponent
+    SignInComponent, SignUpComponent, ListPostComponent, ListTopicComponent, AccountComponent
   ],
   imports: [
     BrowserModule,
