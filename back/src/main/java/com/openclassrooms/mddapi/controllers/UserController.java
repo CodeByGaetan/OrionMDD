@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.responses.MessageResponse;
 import com.openclassrooms.mddapi.services.UserService;
 import com.openclassrooms.mddapi.validations.groups.UpdateUserValidation;
 
@@ -57,7 +58,7 @@ public class UserController {
     public ResponseEntity<?> subscribeTopic(@PathVariable Integer id) {
         try {
             userService.subscribeTopic(id);
-            return ResponseEntity.ok().body("Topic subscribed !");
+            return ResponseEntity.ok().body(new MessageResponse("Topic subscribed !"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -67,7 +68,7 @@ public class UserController {
     public ResponseEntity<?> unSubscribeTopic(@PathVariable Integer id) {
         try {
             userService.unSubscribeTopic(id);
-            return ResponseEntity.ok().body("Topic unsubscribed !");
+            return ResponseEntity.ok().body(new MessageResponse("Topic unsubscribed !"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
