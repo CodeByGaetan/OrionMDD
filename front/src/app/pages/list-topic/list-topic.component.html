@@ -1,7 +1,7 @@
 <div class="container">
     <mat-card *ngFor="let topic of topics$ | async">
       <mat-card-title>{{ topic.title }}</mat-card-title>
-      <mat-card-content>Description: {{ topic.description }}</mat-card-content>
+      <mat-card-content>Description : {{ topic.description }}</mat-card-content>
       <button *ngIf="!topicIds.includes(topic.id)" mat-raised-button color="primary" (click)="subscribe(topic.id)">S'abonner</button>
       <button *ngIf="topicIds.includes(topic.id)" mat-raised-button color="warn" (click)="unSubscribe(topic.id)">Se désabonner</button>
     </mat-card>
