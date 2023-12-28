@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { SignInRequest } from '../interfaces/signInRequest.interface';
-import { AuthService } from '../services/auth.service';
+import { SignInRequest } from '../../interfaces/requests/signInRequest.interface';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 

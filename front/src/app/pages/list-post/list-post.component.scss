@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+}
+
+.is-focusable {
+    cursor: pointer;
+}
+
+.is-focusable:hover {
+    background-color: lightgray;
+}

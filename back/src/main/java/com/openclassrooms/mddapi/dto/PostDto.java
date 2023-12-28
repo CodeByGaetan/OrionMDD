@@ -16,7 +16,7 @@ public class PostDto {
     private Integer id;
 
     @NotNull
-    private Integer topic_id;
+    private Integer topicId;
 
     @NotBlank
     @Size(max = 255)
@@ -28,5 +28,5 @@ public class PostDto {
 
     private LocalDateTime createdAt;
 
-    private String user_name;
+    private String userName;
 }

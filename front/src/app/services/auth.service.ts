@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignInRequest } from '../interfaces/signInRequest.interface';
+import { SignInRequest } from '../interfaces/requests/signInRequest.interface';
 import { Observable } from 'rxjs';
-import { SignUpRequest } from '../interfaces/signUpRequest.interface';
+import { SignUpRequest } from '../interfaces/requests/signUpRequest.interface';
 
 @Injectable({
   providedIn: 'root'

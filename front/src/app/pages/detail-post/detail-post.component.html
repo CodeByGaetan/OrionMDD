@@ -1,0 +1,27 @@
+<button mat-icon-button routerLink="/posts">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+<div *ngIf="post$ | async as post">
+  <h1>{{ post.title }}</h1>
+  <p>{{ post.createdAt | date : "dd/MM/yy" }}</p>
+  <p>{{ post.userName }}</p>
+  <p>{{ post.topicId }}</p>
+  <p>{{ post.content }}</p>
+</div>
+<mat-divider></mat-divider>
+<h2>Commentaires</h2>
+<mat-card *ngFor="let comment of comments$ | async">
+  <p>{{ comment.userName }}</p>
+  <p>{{ comment.content }}</p>
+</mat-card>
+
+<form [formGroup]="commentForm" #commentNgForm="ngForm" (ngSubmit)="commentPost()">
+  <mat-form-field appearance="outline">
+    <mat-label>Écrivez ici votre commentaire</mat-label>
+    <textarea matInput id="content" formControlName="content"></textarea>
+  </mat-form-field>
+  <button mat-raised-button type="submit" [disabled]="commentForm.invalid">
+    <mat-icon>send</mat-icon>
+  </button>
+  <p *ngIf="onError" class="error">Erreur lors de l'ajout du commentaire</p>
+</form>

@@ -24,4 +24,4 @@ Note: I recommend to use material however it's not mandatory, if you prefer you 
 
 Good luck!
 
-http://localhost:3001/api/swagger-ui/index.html
+http://localhost:3000/api/swagger-ui/index.html

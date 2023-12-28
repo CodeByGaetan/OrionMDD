@@ -20,15 +20,15 @@ public abstract class PostMapper implements EntityMapper<PostDto, Post> {
         UserService userService;
 
         @Mappings({
-                @Mapping(target = "topic", expression = "java( topicService.getById(postDto.getTopic_id()) )"),
+                @Mapping(target = "topic", expression = "java( topicService.getById(postDto.getTopicId()) )"),
                 @Mapping(target = "user", ignore = true),
                 @Mapping(target = "comments", ignore = true)
         })
         public abstract Post toEntity(PostDto postDto);
 
         @Mappings({
-                @Mapping(source = "topic.id", target = "topic_id"),
-                @Mapping(source = "user.name", target = "user_name"),
+                @Mapping(source = "topic.id", target = "topicId"),
+                @Mapping(source = "user.name", target = "userName"),
         })
         public abstract PostDto toDto(Post post);
 
