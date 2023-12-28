@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { Topic } from 'src/app/interfaces/topic.interface';
 import { TopicService } from 'src/app/services/topic.service';
 import { UserService } from 'src/app/services/user.service';
@@ -9,10 +9,12 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './list-topic.component.html',
   styleUrls: ['./list-topic.component.scss']
 })
-export class ListTopicComponent implements OnInit {
+export class ListTopicComponent implements OnInit, OnDestroy {
 
   public topics$!: Observable<Topic[]>;
-  public topicIds$!: Observable<number[]>;
+  public topicIds: number[] = [];
+  
+  private destroy$!: Subject<boolean>;
 
   constructor(
     private topicService: TopicService,
@@ -20,19 +22,19 @@ export class ListTopicComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.topics$ = this.topicService.getAll();
+    this.destroy$ = new Subject<boolean>();
     
-    this.fetchTopicIds();
-  }
-
-  fetchTopicIds(): void {
-    this.topicIds$ = this.userService.getTopicIds();
+    this.topics$ = this.topicService.getAll();
+    this.userService.getTopicIds().pipe(
+      takeUntil(this.destroy$),
+      tap(ids => this.topicIds = ids)
+    ).subscribe();
   }
 
   subscribe(topicId: number): void {
     this.userService.subscribeTopic(topicId).subscribe({
       next: (_: void) => {
-        this.fetchTopicIds();       
+        this.topicIds.push(topicId);      
       },
       error: () => {}
     });
@@ -41,10 +43,14 @@ export class ListTopicComponent implements OnInit {
   unSubscribe(topicId: number): void {
     this.userService.unSubscribeTopic(topicId).subscribe({
       next: (_: void) => {
-        this.fetchTopicIds();
+        this.topicIds.splice(this.topicIds.indexOf(topicId), 1);
       },
       error: () => {}
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 
 }
