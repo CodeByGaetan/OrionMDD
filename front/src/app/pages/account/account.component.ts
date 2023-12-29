@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, combineLatest, map, take, tap } from 'rxjs';
+import { UserRequest } from 'src/app/interfaces/requests/userRequest.interface';
 import { Topic } from 'src/app/interfaces/topic.interface';
-import { User } from 'src/app/interfaces/user.interface';
 import { TopicService } from 'src/app/services/topic.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -13,9 +13,26 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AccountComponent implements OnInit {
 
-  public userForm!: FormGroup;
+  public userForm = this.formBuilder.group({
+    name: [
+      '',
+      [
+        Validators.required,
+        Validators.min(3),
+        Validators.max(20)
+      ]
+    ],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ]
+  });;
+
+  public subTopicIds: number[] = [];
   public topics$!: Observable<Topic[]>;
-  // public user$!: Observable<User>
 
   public onError = false;
 
@@ -26,35 +43,32 @@ export class AccountComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.userService.getUserInfo().pipe(
-      tap(userInfo => {
-        this.userForm = this.formBuilder.group({
-          name: [
-            userInfo.name,
-            [
-              Validators.required,
-              Validators.min(3),
-              Validators.max(20)
-            ]
-          ],
-          email: [
-            userInfo.email,
-            [
-              Validators.required,
-              Validators.email
-            ]
-          ]
-        });
-      })
-    ).subscribe();
-
     this.topics$ = this.topicService.getAll();
-    
+
+    this.userService.getUserInfo().pipe(take(1)).subscribe(userInfo => {
+      this.userForm.patchValue({
+        name: userInfo.name,
+        email: userInfo.email
+      });
+      this.subTopicIds = userInfo.topicIds;
+    });
   }
 
   updateUser(): void {
+    const userRequest = this.userForm.value as UserRequest;
+    this.userService.updateUser(userRequest).pipe(take(1)).subscribe({
+      next: (_: void) => { },
+      error: () => this.onError = true
+    });
+  }
 
+  unSubscribe(topicId: number) {
+    this.userService.unSubscribeTopic(topicId).pipe(take(1)).subscribe({
+      next: (topicIds) => {
+        this.subTopicIds = topicIds;
+      },
+      error: () => { }
+    });
   }
 
 }
