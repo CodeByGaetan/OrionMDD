@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { SignInRequest } from '../../interfaces/requests/signInRequest.interface';
+import { SignInRequest } from '../../interfaces/signInRequest.interface';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
 
   public signInForm = this.formBuilder.group({
     email: [
@@ -38,10 +38,7 @@ export class SignInComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-  }
-
-  onSubmit(): void {
+  public onSubmit(): void {
     const signInRequest = this.signInForm.value as SignInRequest;
     this.authService.signIn(signInRequest).subscribe({
       next: (_: void) => {

@@ -6,17 +6,15 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   constructor(private router : Router) {}
 
-  ngOnInit(): void {}
-
-  signIn() {
+  public signIn() {
     this.router.navigateByUrl('signin');
   }
 
-  signUp() {
+  public signUp() {
     this.router.navigateByUrl('signup');
   }
 

@@ -11,18 +11,18 @@ import { Router } from '@angular/router';
 })
 export class ListPostComponent implements OnInit {
 
-  posts$!: Observable<Post[]>;
+  public posts$!: Observable<Post[]>;
 
   constructor(
     private postService: PostService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.posts$ = this.postService.getAll();
   }
 
-  goPost(postId: number): void {
+  public goPost(postId: number): void {
     this.router.navigateByUrl(`/posts/${postId}`);
   }
 

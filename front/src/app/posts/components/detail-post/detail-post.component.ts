@@ -5,7 +5,7 @@ import { Post } from '../../interfaces/post.interface';
 import { PostService } from '../../services/post.service';
 import { Comment } from '../../interfaces/comment.interface';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
-import { CommentRequest } from 'src/app/interfaces/requests/commentRequest.interface';
+import { CommentRequest } from 'src/app/posts/interfaces/commentRequest.interface';
 
 @Component({
   selector: 'app-detail-post',
@@ -14,10 +14,10 @@ import { CommentRequest } from 'src/app/interfaces/requests/commentRequest.inter
 })
 export class DetailPostComponent implements OnInit {
 
-  postId!: number;
-  post$!: Observable<Post>;
-  comments$!: Observable<Comment[]>;
-  commentForm = this.formBuilder.group({
+  private postId!: number;
+  public post$!: Observable<Post>;
+  public comments$!: Observable<Comment[]>;
+  public commentForm = this.formBuilder.group({
     content: [
       '',
       [
@@ -28,7 +28,7 @@ export class DetailPostComponent implements OnInit {
     ]
   });
   @ViewChild('commentNgForm') commentNgForm!: NgForm;
-  onError = false;
+  public onError = false;
 
   constructor(
     private postService: PostService,
@@ -36,17 +36,17 @@ export class DetailPostComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.postId = +this.route.snapshot.params['id'];
     this.fetchPost();
   }
 
-  fetchPost(): void {
+  private fetchPost(): void {
     this.post$ = this.postService.getById(this.postId);
     this.comments$ = this.postService.getComments(this.postId);
   }
   
-  commentPost(): void {
+  public commentPost(): void {
     const commentRequest = this.commentForm.value as CommentRequest;
     this.postService.addComment(this.postId, commentRequest).subscribe({
       next: (_: void) => {
@@ -56,8 +56,5 @@ export class DetailPostComponent implements OnInit {
       error: () => this.onError = true
     });
   }
-  
-
-
 
 }

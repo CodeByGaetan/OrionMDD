@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Post } from '../interfaces/post.interface';
 import { Observable } from 'rxjs';
 import { Comment } from '../interfaces/comment.interface';
-import { CommentRequest } from '../interfaces/requests/commentRequest.interface';
-import { PostRequest } from '../interfaces/requests/postRequest.interface';
+import { CommentRequest } from '../interfaces/commentRequest.interface';
+import { PostRequest } from '../interfaces/postRequest.interface';
 
 @Injectable({
   providedIn: 'root'

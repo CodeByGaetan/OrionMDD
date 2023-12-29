@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { SignUpRequest } from '../../interfaces/requests/signUpRequest.interface';
+import { SignUpRequest } from '../../interfaces/signUpRequest.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
 
   public signUpForm = this.formBuilder.group({
     name: [
@@ -46,10 +46,7 @@ export class SignUpComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-  }
-
-  onSubmit(): void {
+  public onSubmit(): void {
     const signUpRequest = this.signUpForm.value as SignUpRequest;
     this.authService.signUp(signUpRequest).subscribe({
       next: (_: void) => {

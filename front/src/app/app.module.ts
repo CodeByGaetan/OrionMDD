@@ -3,16 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { HomeComponent } from './shared/home/home.component';
+import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { ListPostComponent } from './pages/list-post/list-post.component';
-import { ListTopicComponent } from './pages/list-topic/list-topic.component';
-import { AccountComponent } from './pages/account/account.component';
-import { DetailPostComponent } from './pages/detail-post/detail-post.component';
-import { NewPostComponent } from './pages/new-post/new-post.component';
+import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
+import { ListPostComponent } from './posts/components/list-post/list-post.component';
+import { ListTopicComponent } from './topics/components/list-topic/list-topic.component';
+import { AccountComponent } from './user/components/account/account.component';
+import { DetailPostComponent } from './posts/components/detail-post/detail-post.component';
+import { NewPostComponent } from './posts/components/new-post/new-post.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field'

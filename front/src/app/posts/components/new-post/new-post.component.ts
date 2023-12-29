@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PostRequest } from 'src/app/interfaces/requests/postRequest.interface';
-import { Topic } from 'src/app/interfaces/topic.interface';
-import { PostService } from 'src/app/services/post.service';
-import { TopicService } from 'src/app/services/topic.service';
+import { PostRequest } from 'src/app/posts/interfaces/postRequest.interface';
+import { Topic } from 'src/app/topics/interfaces/topic.interface';
+import { PostService } from 'src/app/posts/services/post.service';
+import { TopicService } from 'src/app/topics/services/topic.service';
 
 @Component({
   selector: 'app-new-post',
@@ -47,11 +47,11 @@ export class NewPostComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.topics$ = this.topicService.getAll();
   }
 
-  createPost(): void {
+  public createPost(): void {
     const postRequest = this.postForm.value as PostRequest;
     this.postService.createPost(postRequest).subscribe({
       next: (_: void) => {

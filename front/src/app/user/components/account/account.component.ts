@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription, combineLatest, map, take, tap } from 'rxjs';
-import { UserRequest } from 'src/app/interfaces/requests/userRequest.interface';
-import { Topic } from 'src/app/interfaces/topic.interface';
-import { TopicService } from 'src/app/services/topic.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserRequest } from 'src/app/user/interfaces/userRequest.interface';
+import { Topic } from 'src/app/topics/interfaces/topic.interface';
+import { TopicService } from 'src/app/topics/services/topic.service';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-account',
@@ -42,7 +42,7 @@ export class AccountComponent implements OnInit {
     private topicService: TopicService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.topics$ = this.topicService.getAll();
 
     this.userService.getUserInfo().pipe(take(1)).subscribe(userInfo => {
@@ -54,7 +54,7 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  updateUser(): void {
+  public updateUser(): void {
     const userRequest = this.userForm.value as UserRequest;
     this.userService.updateUser(userRequest).pipe(take(1)).subscribe({
       next: (_: void) => { },
@@ -62,7 +62,7 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  unSubscribe(topicId: number) {
+  public unSubscribe(topicId: number) {
     this.userService.unSubscribeTopic(topicId).pipe(take(1)).subscribe({
       next: (topicIds) => {
         this.subTopicIds = topicIds;
