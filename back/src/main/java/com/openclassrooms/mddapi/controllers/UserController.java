@@ -20,7 +20,7 @@ import com.openclassrooms.mddapi.validations.groups.UpdateUserValidation;
 
 @RestController
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
 
@@ -38,27 +38,29 @@ public class UserController {
     public ResponseEntity<?> updateCurrentUser(@Validated(UpdateUserValidation.class) @RequestBody UserDto userDto) {
         try {
             userService.updateCurrentUser(userDto);
-            return ResponseEntity.ok().body("User info updated !");
+            return ResponseEntity.ok().body(new MessageResponse("User info updated !"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     // A voir si ne pas plutot utiliser la fonction ci-avant plutot
-    @GetMapping("/user/topics")
-    public ResponseEntity<?> getUserSuscribedTopics() {
-        User user = userService.getCurrentUser();
-
-        UserDto userDto = userMapper.toDto(user);
-
-        return ResponseEntity.ok().body(userDto.getTopicIds());
-    }
+    // @GetMapping("/user/topics")
+    // public ResponseEntity<?> getUserSuscribedTopics() {
+    // User user = userService.getCurrentUser();
+    // UserDto userDto = userMapper.toDto(user);
+    // return ResponseEntity.ok().body(userDto.getTopicIds());
+    // }
 
     @PostMapping("/user/topics/{id}")
     public ResponseEntity<?> subscribeTopic(@PathVariable Integer id) {
         try {
             userService.subscribeTopic(id);
-            return ResponseEntity.ok().body(new MessageResponse("Topic subscribed !"));
+
+            // Return updated subscribed topic ids list
+            User user = userService.getCurrentUser();
+            UserDto userDto = userMapper.toDto(user);
+            return ResponseEntity.ok().body(userDto.getTopicIds());
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -68,7 +70,11 @@ public class UserController {
     public ResponseEntity<?> unSubscribeTopic(@PathVariable Integer id) {
         try {
             userService.unSubscribeTopic(id);
-            return ResponseEntity.ok().body(new MessageResponse("Topic unsubscribed !"));
+
+            // Return updated subscribed topic ids list
+            User user = userService.getCurrentUser();
+            UserDto userDto = userMapper.toDto(user);
+            return ResponseEntity.ok().body(userDto.getTopicIds());
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

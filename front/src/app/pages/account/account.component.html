@@ -1,1 +1,40 @@
-<p>account works!</p>
+<form [formGroup]="userForm" (ngSubmit)="updateUser()">
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Nom d'utilisateur</mat-label>
+      <input matInput id="name" formControlName="name" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input matInput id="email" formControlName="email" />
+    </mat-form-field>
+  </p>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="userForm.invalid"
+  >
+    Sauvegarder
+  </button>
+  <p *ngIf="onError" class="error">Erreur lors de la sauvegarde</p>
+  <button mat-button>Se déconnecter</button>
+</form>
+
+<mat-divider></mat-divider>
+
+<h1>Abonnements</h1>
+
+<div class="container">
+  <ng-container *ngFor="let topic of topics$ | async">
+    <mat-card *ngIf="subTopicIds.includes(topic.id)">
+      <mat-card-title>{{ topic.title }}</mat-card-title>
+      <mat-card-content>Description : {{ topic.description }}</mat-card-content>
+      <button mat-raised-button color="warn" (click)="unSubscribe(topic.id)">
+        Se désabonner
+      </button>
+    </mat-card>
+  </ng-container>
+</div>
