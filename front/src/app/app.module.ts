@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './shared/home/home.component';
+import { HomeComponent } from './auth/components/home/home.component';
 import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
+import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 
 const materialModules = [
   MatButtonModule,
@@ -38,7 +39,14 @@ const materialModules = [
   declarations: [
     AppComponent,
     HomeComponent,
-    SignInComponent, SignUpComponent, ListPostComponent, ListTopicComponent, AccountComponent, DetailPostComponent, NewPostComponent
+    SignInComponent,
+    SignUpComponent,
+    ListPostComponent,
+    ListTopicComponent,
+    AccountComponent,
+    DetailPostComponent,
+    NewPostComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
