@@ -44,7 +44,7 @@ export class SignInComponent {
       next: (_: void) => {
         this.router.navigateByUrl('/');
       },
-      error: (error : HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         this.onError = true;
         this.errorMessage = error.error.message;
       }

@@ -1,3 +1,9 @@
+img {
+  max-width: fit-content;
+  width: 100%;
+  margin-bottom: 3em;
+}
+
 .center {
   height: 100vh;
   display: flex;
@@ -6,10 +12,23 @@
   flex-direction: column;
 }
 
-.test {
+.buttons {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
 
-  button {
-    margin: 0 100px;
+@media screen and (max-width: 600px) {
+
+  .center {
+    justify-content: flex-start;
   }
 
+  .buttons {
+    flex-direction: column;
+    width:fit-content;
+    height: 120px;
+  }
 }

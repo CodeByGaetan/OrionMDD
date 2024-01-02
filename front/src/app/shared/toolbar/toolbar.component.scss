@@ -1,11 +1,33 @@
+
+
+mat-toolbar {
+    height: 4.2em;
+    // background-color: white;
+    border-bottom: 1px solid gray;
+    // box-shadow: 0 0 5px black;
+}
+
+img {
+    vertical-align: middle;
+    height: 4em;
+}
+
 a {
     text-decoration: none;
-    margin-right: 20px;
+    margin-right: 2em;
     color: black;
 }
 
+mat-icon {
+    transform: scale(2);
+    vertical-align: middle;
+}
+
+@import '~@angular/material/theming';
+
 .active {
-    opacity: 50%;
+    // opacity: 50%;
+    color: mat-color(mat-palette($mat-purple, 800));
 }
 
 .spacer {

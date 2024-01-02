@@ -13,6 +13,7 @@ import { ListTopicComponent } from './topics/components/list-topic/list-topic.co
 import { AccountComponent } from './user/components/account/account.component';
 import { DetailPostComponent } from './posts/components/detail-post/detail-post.component';
 import { NewPostComponent } from './posts/components/new-post/new-post.component';
+import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -22,7 +23,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
-import { ToolbarComponent } from './shared/toolbar/toolbar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatListModule } from '@angular/material/list';
 
 const materialModules = [
   MatButtonModule,
@@ -33,6 +37,9 @@ const materialModules = [
   MatToolbarModule,
   MatDividerModule,
   MatSelectModule,
+  MatSidenavModule,
+  LayoutModule,
+  MatListModule
 ];
 
 @NgModule({
@@ -46,7 +53,8 @@ const materialModules = [
     AccountComponent,
     DetailPostComponent,
     NewPostComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    NavigationBarComponent
   ],
   imports: [
     BrowserModule,
