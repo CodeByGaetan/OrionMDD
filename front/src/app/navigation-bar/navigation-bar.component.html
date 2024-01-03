@@ -2,9 +2,9 @@
 
   <mat-sidenav #drawer class="sidenav" position="end">
     <mat-nav-list>
-      <a mat-list-item routerLink="/posts" routerLinkActive="active">Articles</a>
-      <a mat-list-item routerLink="/topics" routerLinkActive="active">Thèmes</a>
-      <a mat-list-item routerLink="/account" routerLinkActive="active">
+      <a mat-list-item routerLink="/posts" routerLinkActive="active" (click)="drawer.close()">Articles</a>
+      <a mat-list-item routerLink="/topics" routerLinkActive="active" (click)="drawer.close()">Thèmes</a>
+      <a mat-list-item routerLink="/account" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon>account_circle</mat-icon>
       </a>
     </mat-nav-list>
@@ -12,22 +12,23 @@
 
   <mat-sidenav-content>
 
-    <mat-toolbar>
+    <mat-toolbar *ngIf="showToolbar()" >
       <a routerLink="/">
         <img src="/assets/logo_p6.png" alt="logo" />
       </a>
       <span class="spacer"></span>
-      <a routerLink="/posts" routerLinkActive="active">Articles</a>
-      <a routerLink="/topics" routerLinkActive="active">Thèmes</a>
-      <a routerLink="/account" routerLinkActive="active">
-        <mat-icon>account_circle</mat-icon>
-      </a>
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
+      <div class="navLinks" *ngIf="showNavLinks()">
+        <a routerLink="/posts" routerLinkActive="active">Articles</a>
+        <a routerLink="/topics" routerLinkActive="active">Thèmes</a>
+        <a routerLink="/account" routerLinkActive="active">
+          <mat-icon>account_circle</mat-icon>
+        </a>
+        <button #button mat-icon-button (click)="drawer.toggle()" onclick="this.blur()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
     </mat-toolbar>
 
-    <!-- In order to place other components -->
     <ng-content></ng-content>
 
   </mat-sidenav-content>
