@@ -1,9 +1,24 @@
-<button mat-raised-button color="primary" routerLink="/posts/create">Créer un article</button>
+<div class="header">
+  <button mat-raised-button color="primary" routerLink="/posts/create">
+    Créer un article
+  </button>
+  <span class="spacer"></span>
+  <button mat-button>Trier par ↓</button>
+</div>
 <div class="container">
-  <mat-card *ngFor="let post of posts$ | async" role="button" class="is-focusable" (click)="goPost(post.id)">
+  <mat-card
+    *ngFor="let post of posts$ | async"
+    role="button"
+    class="is-focusable"
+    (click)="goPost(post.id)"
+  >
     <mat-card-title>{{ post.title }}</mat-card-title>
-    <mat-card-subtitle>{{ post.createdAt | date : "dd/MM/yy" }}</mat-card-subtitle>
-    <mat-card-subtitle>{{ post.userName }}</mat-card-subtitle>
+    <div class="subtitles">
+      <mat-card-subtitle>{{
+        post.createdAt | date : "dd/MM/yy"
+      }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ post.userName }}</mat-card-subtitle>
+    </div>
     <mat-card-content>{{ post.content }}</mat-card-content>
   </mat-card>
 </div>

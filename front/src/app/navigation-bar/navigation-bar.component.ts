@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,11 +10,14 @@ import { Router } from '@angular/router';
 export class NavigationBarComponent implements OnInit {
 
   public screenWidth!: number;
+  @ViewChild('test') test!: MatSidenavContainer;
+  @ViewChild('drawer') drawer!: MatSidenav;
 
   constructor(public router: Router) { }
 
   ngOnInit() {
     this.screenWidth = window.innerWidth;
+    // this.test.end = this.drawer;
   }
 
   @HostListener('window:resize', ['$event']) 

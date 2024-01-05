@@ -1,9 +1,10 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container #test class="sidenav-container">
 
   <mat-sidenav #drawer class="sidenav" position="end">
-    <mat-nav-list>
+    <mat-nav-list class="inline-list">
       <a mat-list-item routerLink="/posts" routerLinkActive="active" (click)="drawer.close()">Articles</a>
       <a mat-list-item routerLink="/topics" routerLinkActive="active" (click)="drawer.close()">Thèmes</a>
+      <span class="spacer"></span>
       <a mat-list-item routerLink="/account" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon>account_circle</mat-icon>
       </a>
@@ -11,9 +12,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-
     <mat-toolbar *ngIf="showToolbar()" >
-      <a routerLink="/">
+      <a routerLink="/posts">
         <img src="/assets/logo_p6.png" alt="logo" />
       </a>
       <span class="spacer"></span>
