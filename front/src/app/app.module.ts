@@ -6,15 +6,16 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './auth/components/home/home.component';
 import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
 import { ListPostComponent } from './posts/components/list-post/list-post.component';
 import { ListTopicComponent } from './topics/components/list-topic/list-topic.component';
 import { AccountComponent } from './user/components/account/account.component';
 import { DetailPostComponent } from './posts/components/detail-post/detail-post.component';
 import { NewPostComponent } from './posts/components/new-post/new-post.component';
-import { PaginationComponent } from './shared/pagination/pagination.component';
-import { NavigationBarComponent } from './shared/navigation-bar/navigation-bar.component';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { NavigationBarComponent } from './shared/components/navigation-bar/navigation-bar.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -28,7 +29,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 const materialModules = [
   MatButtonModule,
@@ -42,7 +44,8 @@ const materialModules = [
   MatSidenavModule,
   LayoutModule,
   MatListModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({
@@ -57,7 +60,8 @@ const materialModules = [
     DetailPostComponent,
     NewPostComponent,
     NavigationBarComponent,
-    PaginationComponent
+    PaginationComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,11 @@ const materialModules = [
     HttpClientModule,
     ...materialModules
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoaderInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
