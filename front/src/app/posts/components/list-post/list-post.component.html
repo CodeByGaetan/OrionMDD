@@ -3,11 +3,11 @@
     Créer un article
   </button>
   <span class="spacer"></span>
-  <button mat-button>Trier par ↓</button>
+  <button mat-button (click)="toggleSort()">Trier par {{asc ? "↓" : "↑"}}</button>
 </div>
 <div class="container">
   <mat-card
-    *ngFor="let post of posts$ | async"
+    *ngFor="let post of posts"
     role="button"
     class="is-focusable"
     (click)="goPost(post.id)"
@@ -22,3 +22,4 @@
     <mat-card-content>{{ post.content }}</mat-card-content>
   </mat-card>
 </div>
+<app-pagination [pageSize]="pageSize" [totalSize]="totalSize" [pageIndex]="pageIndex" (pageChanged)="onPageChange($event)"></app-pagination>

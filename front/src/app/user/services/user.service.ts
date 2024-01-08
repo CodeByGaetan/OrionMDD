@@ -17,10 +17,6 @@ export class UserService {
     return this.httpClient.get<User>(this.pathService);
   }
 
-  public getTopicIds(): Observable<number[]> {
-    return this.httpClient.get<User>(this.pathService).pipe(map(userInfo => userInfo.topicIds));
-  }
-
   public subscribeTopic(topicId: number): Observable<number[]> {
     return this.httpClient.post<number[]>(`${this.pathService}/topics/${topicId}`, null);
   }

@@ -27,14 +27,12 @@
 <h1>Abonnements</h1>
 
 <div class="topicsContainer">
-  <ng-container *ngFor="let topic of topics$ | async">
-    <mat-card *ngIf="subTopicIds.includes(topic.id)">
-      <mat-card-title>{{ topic.title }}</mat-card-title>
-      <mat-card-content>Description : {{ topic.description }}</mat-card-content>
-      <div class="spacer"></div>
-      <button mat-raised-button color="warn" (click)="unSubscribe(topic.id)">
-        Se désabonner
-      </button>
-    </mat-card>
-  </ng-container>
+  <mat-card *ngFor="let topic of topics">
+    <mat-card-title>{{ topic.title }}</mat-card-title>
+    <mat-card-content>{{ topic.description }}</mat-card-content>
+    <div class="spacer"></div>
+    <button mat-raised-button color="warn" (click)="unSubscribe(topic.id)">
+      Se désabonner
+    </button>
+  </mat-card>
 </div>

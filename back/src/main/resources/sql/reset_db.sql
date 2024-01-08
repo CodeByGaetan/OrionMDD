@@ -1,4 +1,5 @@
 DROP DATABASE mdddb;
 CREATE DATABASE mdddb;
 USE mdddb;
-SOURCE script.sql;
+SOURCE create.sql;
+SOURCE populate.sql;

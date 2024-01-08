@@ -1,10 +1,9 @@
 package com.openclassrooms.mddapi.dto;
 
-import java.util.List;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.openclassrooms.mddapi.validations.groups.SignInEmailValidation;
 import com.openclassrooms.mddapi.validations.groups.SignInNameValidation;
 import com.openclassrooms.mddapi.validations.groups.SignUpValidation;
@@ -16,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
     @NotBlank(groups = {SignUpValidation.class, SignInEmailValidation.class, UpdateUserValidation.class})
@@ -28,5 +28,4 @@ public class UserDto {
     @ValidPassword(groups = {SignUpValidation.class, SignInEmailValidation.class, SignInNameValidation.class})
     private String password;
 
-    private List<Integer> topicIds;
 }

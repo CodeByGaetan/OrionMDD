@@ -14,7 +14,7 @@ import { TopicService } from 'src/app/topics/services/topic.service';
 })
 export class NewPostComponent implements OnInit {
 
-  public topics$!: Observable<Topic[]>;
+  public topics!: Topic[];
 
   public postForm = this.formBuilder.group({
     topicId: [
@@ -48,7 +48,9 @@ export class NewPostComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.topics$ = this.topicService.getAll();
+    this.topicService.getAll(true).subscribe((response) => {
+        this.topics = response.topics;
+    })
   }
 
   public createPost(): void {

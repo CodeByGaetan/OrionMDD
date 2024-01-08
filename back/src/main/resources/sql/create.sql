@@ -1,0 +1,44 @@
+-- Tables creation
+CREATE TABLE `USERS` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `name` VARCHAR(50) UNIQUE,
+  `email` VARCHAR(50) UNIQUE,
+  `password` VARCHAR(255)
+);
+
+CREATE TABLE `TOPICS` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `title` VARCHAR(255),
+  `description` VARCHAR(2000)
+);
+
+CREATE TABLE `POSTS` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `title` VARCHAR(255),
+  `content` VARCHAR(2000),
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `user_id` INT,
+  `topic_id` INT
+);
+
+CREATE TABLE `COMMENTS` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `content` VARCHAR(2000),
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `user_id` INT,
+  `post_id` INT
+);
+
+CREATE TABLE `SUBSCRIPTIONS` (
+  `user_id` INT, 
+  `topic_id` INT
+);
+
+
+-- Relation constraints between tables
+ALTER TABLE `POSTS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
+ALTER TABLE `POSTS` ADD FOREIGN KEY (`topic_id`) REFERENCES `TOPICS` (`id`);
+ALTER TABLE `COMMENTS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
+ALTER TABLE `COMMENTS` ADD FOREIGN KEY (`post_id`) REFERENCES `POSTS` (`id`);
+ALTER TABLE `SUBSCRIPTIONS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
+ALTER TABLE `SUBSCRIPTIONS` ADD FOREIGN KEY (`topic_id`) REFERENCES `TOPICS` (`id`);

@@ -18,6 +18,8 @@ public class PostDto {
     @NotNull
     private Integer topicId;
 
+    private String topicTitle;
+
     @NotBlank
     @Size(max = 255)
     private String title;

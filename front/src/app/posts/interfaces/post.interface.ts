@@ -1,6 +1,6 @@
 export interface Post {
     id: number,
-    topicId: number,
+    topicTitle: string,
     title: string,
     content: string,
     createdAt: Date,

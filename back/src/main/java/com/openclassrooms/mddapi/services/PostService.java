@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Comment;
@@ -22,8 +26,12 @@ public class PostService {
     @Autowired
     private CommentService commentService;
 
-    public List<Post> getAll() {
-        return postRepository.findAll();
+    public Page<Post> getAllPagedSorted(Integer page, Integer size, Boolean asc) {
+
+        Sort sort = asc ? Sort.by("createdAt").ascending() : Sort.by("createdAt").descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return postRepository.findAll(pageable);
     }
 
     public Post getById(Integer id) {

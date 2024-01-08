@@ -11,8 +11,8 @@ import { UserService } from 'src/app/user/services/user.service';
 })
 export class ListTopicComponent implements OnInit {
 
-  public subTopicIds: number[] = [];
-  public topics$!: Observable<Topic[]>;
+  public subTopicIds!: number[];
+  public topics!: Topic[];
 
   constructor(
     private topicService: TopicService,
@@ -20,8 +20,14 @@ export class ListTopicComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.topics$ = this.topicService.getAll();
-    this.userService.getTopicIds().pipe(take(1)).subscribe(ids => this.subTopicIds = ids);
+    this.topicService.getAll(false).subscribe({
+      next: (response) => {
+        this.topics = response.topics;
+        this.subTopicIds = response.subTopicIds
+      },
+      error: () => {
+      }
+    })
   }
 
   public subscribe(topicId: number): void {

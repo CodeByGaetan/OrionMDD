@@ -31,8 +31,7 @@ export class AccountComponent implements OnInit {
     ]
   });;
 
-  public subTopicIds: number[] = [];
-  public topics$!: Observable<Topic[]>;
+  public topics!: Topic[];
 
   public onError = false;
 
@@ -42,16 +41,23 @@ export class AccountComponent implements OnInit {
     private topicService: TopicService
   ) { }
 
-  public ngOnInit(): void {
-    this.topics$ = this.topicService.getAll();
+  private fetchTopics(): void {
+    this.topicService.getAll(true).pipe(take(1)).subscribe({
+      next: (response) => {
+        this.topics = response.topics;
+      }
+    })
+  }
 
+  public ngOnInit(): void {
     this.userService.getUserInfo().pipe(take(1)).subscribe(userInfo => {
       this.userForm.patchValue({
         name: userInfo.name,
         email: userInfo.email
       });
-      this.subTopicIds = userInfo.topicIds;
     });
+
+    this.fetchTopics();
   }
 
   public updateUser(): void {
@@ -63,11 +69,8 @@ export class AccountComponent implements OnInit {
   }
 
   public unSubscribe(topicId: number) {
-    this.userService.unSubscribeTopic(topicId).pipe(take(1)).subscribe({
-      next: (topicIds) => {
-        this.subTopicIds = topicIds;
-      },
-      error: () => { }
+    this.userService.unSubscribeTopic(topicId).pipe(take(1)).subscribe(() => {
+      this.fetchTopics();
     });
   }
 

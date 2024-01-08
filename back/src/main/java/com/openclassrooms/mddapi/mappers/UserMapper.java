@@ -18,7 +18,7 @@ public interface UserMapper extends EntityMapper<UserDto, User> {
     public User toEntity(UserDto userDto);
 
     @Mappings({
-            @Mapping(target = "topicIds", expression = "java( user.getTopics().stream().map(topic -> topic.getId()).toList() )"),
+        @Mapping(target = "password", ignore = true),
     })
     public UserDto toDto(User user);
 

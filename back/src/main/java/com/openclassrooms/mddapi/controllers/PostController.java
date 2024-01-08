@@ -5,11 +5,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.CommentDto;
@@ -19,9 +22,11 @@ import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.responses.MessageResponse;
+import com.openclassrooms.mddapi.responses.PageResponse;
 import com.openclassrooms.mddapi.services.PostService;
 
 @RestController
+@RequestMapping("/api")
 public class PostController {
 
     @Autowired
@@ -34,10 +39,15 @@ public class PostController {
     private CommentMapper commentMapper;
 
     @GetMapping("/posts")
-    public ResponseEntity<?> getAll() {
-        List<Post> posts = postService.getAll();
+    public ResponseEntity<?> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) {
 
-        return ResponseEntity.ok().body(postMapper.toDto(posts));
+        Page<Post> postsPage = postService.getAllPagedSorted(page, size, asc);
+        List<PostDto> postDtos = postMapper.toDto(postsPage.getContent());
+        Integer totalItems = (int) postsPage.getTotalElements();
+
+        PageResponse<PostDto> pageResponse = new PageResponse<PostDto>(postDtos, totalItems);
+
+        return ResponseEntity.ok().body(pageResponse);
     }
 
     @GetMapping("/posts/{id}")
