@@ -29,8 +29,7 @@ export class SignInComponent {
     ]
   });
 
-  public onError = false;
-  public errorMessage = "";
+  public codeError = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,8 +44,7 @@ export class SignInComponent {
         this.router.navigateByUrl('/');
       },
       error: (error: HttpErrorResponse) => {
-        this.onError = true;
-        this.errorMessage = error.error.message;
+        this.codeError = error.error.codeError;
       }
     });
   }

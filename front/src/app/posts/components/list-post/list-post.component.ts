@@ -20,6 +20,8 @@ export class ListPostComponent implements OnInit {
   public posts!: Post[];
   public totalSize!: number;
 
+  public onError = false;
+
   constructor(
     private postService: PostService,
     private router: Router
@@ -31,9 +33,7 @@ export class ListPostComponent implements OnInit {
         this.posts = response.items;
         this.totalSize = response.totalItems;
       },
-      error: (error) => {
-        // 
-      }
+      error: (error) => this.onError = true
     })
   }
 
@@ -52,10 +52,8 @@ export class ListPostComponent implements OnInit {
     this.fetchData();
   }
 
-
   public goPost(postId: number): void {
     this.router.navigateByUrl(`/posts/${postId}`);
   }
-
 
 }

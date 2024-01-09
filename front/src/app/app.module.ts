@@ -1,21 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './auth/components/home/home.component';
-import { SignInComponent } from './auth/components/sign-in/sign-in.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
-import { ListPostComponent } from './posts/components/list-post/list-post.component';
-import { ListTopicComponent } from './topics/components/list-topic/list-topic.component';
-import { AccountComponent } from './user/components/account/account.component';
-import { DetailPostComponent } from './posts/components/detail-post/detail-post.component';
-import { NewPostComponent } from './posts/components/new-post/new-post.component';
-import { PaginationComponent } from './shared/components/pagination/pagination.component';
-import { NavigationBarComponent } from './shared/components/navigation-bar/navigation-bar.component';
-import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -30,7 +15,26 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './auth/components/home/home.component';
+import { SignInComponent } from './auth/components/sign-in/sign-in.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
+import { ListPostComponent } from './posts/components/list-post/list-post.component';
+import { ListTopicComponent } from './topics/components/list-topic/list-topic.component';
+import { AccountComponent } from './user/components/account/account.component';
+import { DetailPostComponent } from './posts/components/detail-post/detail-post.component';
+import { NewPostComponent } from './posts/components/new-post/new-post.component';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { NavigationBarComponent } from './core/components/navigation-bar/navigation-bar.component';
+import { SpinnerComponent } from './core/components/spinner/spinner.component';
+import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
+
 
 const materialModules = [
   MatButtonModule,
@@ -45,7 +49,8 @@ const materialModules = [
   LayoutModule,
   MatListModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
@@ -61,7 +66,8 @@ const materialModules = [
     NewPostComponent,
     NavigationBarComponent,
     PaginationComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

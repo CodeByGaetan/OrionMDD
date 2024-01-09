@@ -1,3 +1,4 @@
+<p *ngIf="onError" class="error">Erreur lors de la récupération de la liste des abonnements</p>
 <div class="container">
   <mat-card *ngFor="let topic of topics">
     <mat-card-title>{{ topic.title }}</mat-card-title>

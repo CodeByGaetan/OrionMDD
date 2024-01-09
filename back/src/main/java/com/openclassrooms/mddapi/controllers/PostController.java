@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class PostController {
     private CommentMapper commentMapper;
 
     @GetMapping("/posts")
-    public ResponseEntity<?> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) {
+    public ResponseEntity<?> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) throws InterruptedException {
 
         Page<Post> postsPage = postService.getAllPagedSorted(page, size, asc);
         List<PostDto> postDtos = postMapper.toDto(postsPage.getContent());
@@ -62,6 +63,7 @@ public class PostController {
     }
 
     @PostMapping("/posts")
+    // TRANSACTIONAL ?
     public ResponseEntity<?> createPost(@Valid @RequestBody PostDto postDto) {
 
         Post newPost = postMapper.toEntity(postDto);
@@ -69,13 +71,13 @@ public class PostController {
             return ResponseEntity.badRequest().body(new MessageResponse("Topic from topic_id not found"));
         }
 
-        // Retourner l'objet ?
         postService.create(newPost);
 
         return ResponseEntity.ok().body(new MessageResponse("Post created !"));
     }
 
     @GetMapping("/posts/{id}/comments")
+    @Transactional
     public ResponseEntity<?> getCommentsFromPost(@PathVariable Integer id) {
 
         Post post = postService.getById(id);
@@ -98,7 +100,6 @@ public class PostController {
 
         Comment newComment = commentMapper.toEntity(commentDto);
 
-        // Retourner l'objet ?
         postService.createCommentOnPost(post, newComment);
 
         return ResponseEntity.ok().body(new MessageResponse("Post commented !"));

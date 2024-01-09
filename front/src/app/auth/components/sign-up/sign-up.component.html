@@ -1,5 +1,5 @@
 <div class="center">
-  <button mat-icon-button routerLink="/">
+  <button mat-icon-button routerLink="/home">
     <mat-icon>arrow_back</mat-icon>
   </button>
   <img src="/assets/logo_p6.png" alt="logo" />
@@ -8,14 +8,17 @@
     <label>Nom d'utilisateur</label>
     <mat-form-field appearance="outline">
       <input matInput id="name" formControlName="name" />
+      <mat-hint *ngIf="codeError === 1">Nom d'utilisateur déjà utilisé</mat-hint>
     </mat-form-field>
     <label>E-mail</label>
     <mat-form-field appearance="outline">
       <input matInput id="email" formControlName="email" />
+      <mat-hint *ngIf="codeError === 2">Email déjà utilisé</mat-hint>
     </mat-form-field>
     <label>Mot de passe</label>
     <mat-form-field appearance="outline">
       <input matInput id="password" formControlName="password" />
+      <mat-hint *ngIf="codeError === 3">Mot de passe non valide</mat-hint>
     </mat-form-field>
     <button
       mat-raised-button
@@ -25,6 +28,5 @@
     >
       S'inscrire
     </button>
-    <p *ngIf="onError" class="error">{{ errorMessage }}</p>
   </form>
 </div>

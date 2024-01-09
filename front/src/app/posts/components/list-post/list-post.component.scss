@@ -7,6 +7,11 @@
   }
 }
 
+.error {
+  color: red;
+  text-align: center;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

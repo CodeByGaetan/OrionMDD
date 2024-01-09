@@ -8,37 +8,22 @@
   color: mat-color(mat-palette($mat-purple, 800)) !important;
 }
 
-// TEST EN COURS
-.mat-nav-list {
-  padding: 0;
-  // display: flex;
-  // flex-direction: column;
-
-  .mat-list-item {
-
-    .mat-list-item-content {
-
-      justify-content: flex-end !important;
-
-    }
-
-  }
-  
-}
-
-
-
 .sidenav {
   width: 200px;
 
-  a mat-icon {
-    transform: scale(1.7);
-    margin: 0 9px;
-  }
+  .mat-nav-list {
+    padding-top: 70px;
+  
+    .bottom {
+      position: absolute;
+      bottom: 0;
 
-  // .spacer {
-  //   flex: 1 1 auto;
-  // }
+      mat-icon {
+        transform: scale(2);
+        margin: 0 11px;
+      }
+    }
+  }
 }
 
 mat-toolbar {

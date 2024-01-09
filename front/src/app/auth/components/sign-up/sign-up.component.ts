@@ -37,8 +37,7 @@ export class SignUpComponent {
     ]
   });
 
-  public onError = false;
-  public errorMessage = "";
+  public codeError = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,8 +52,7 @@ export class SignUpComponent {
         this.router.navigateByUrl('/');
       },
       error: (error : HttpErrorResponse) => {
-        this.onError = true;
-        this.errorMessage = error.error.message;
+        this.codeError = error.error.codeError;
       }
     });
   }

@@ -38,7 +38,8 @@ export class NewPostComponent implements OnInit {
     ]
   });
 
-  public onError = false;
+  public onErrorCreate = false;
+  public onErrorTopics = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,8 +49,11 @@ export class NewPostComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.topicService.getAll(true).subscribe((response) => {
+    this.topicService.getAll(true).subscribe({
+      next: (response) => {
         this.topics = response.topics;
+      },
+      error: () => this.onErrorTopics = true
     })
   }
 
@@ -59,7 +63,7 @@ export class NewPostComponent implements OnInit {
       next: (_: void) => {
         this.router.navigateByUrl('/posts');
       },
-      error: () => this.onError = true
+      error: () => this.onErrorCreate = true
     });
   }
 

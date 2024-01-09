@@ -2,9 +2,12 @@ package com.openclassrooms.mddapi.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class MessageResponse {
-    public String message;
+    public final String message;
+    public Integer codeError;
 }

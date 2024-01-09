@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.controllers;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -46,6 +48,7 @@ public class UserController {
         }
     }
     
+    @Transactional
     @PostMapping("/user/topics/{id}")
     public ResponseEntity<?> subscribeTopic(@PathVariable Integer id) {
         try {
@@ -57,6 +60,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @DeleteMapping("/user/topics/{id}")
     public ResponseEntity<?> unSubscribeTopic(@PathVariable Integer id) {
         try {

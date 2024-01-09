@@ -9,3 +9,15 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+// Right align the navigation links into the side navigation bar
+.mat-sidenav .mat-list-base .mat-list-item .mat-list-item-content {
+  justify-content: flex-end;
+}
+
+.error-snackbar {
+  color: red;
+  button {
+    color: white;
+  }
+}

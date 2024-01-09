@@ -1,3 +1,9 @@
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 15px;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -11,6 +17,10 @@ mat-card {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  .mat-card-title {
+    line-height: 1.1em;
+  }
 
   button {
     align-self: center;

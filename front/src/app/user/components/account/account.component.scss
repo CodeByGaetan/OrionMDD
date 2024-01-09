@@ -4,6 +4,11 @@ h1 {
   text-align: center;
 }
 
+.error {
+  text-align: center;
+  color: red;
+}
+
 .userInfoContainer {
   display: flex;
   justify-content: center;
@@ -21,11 +26,6 @@ h1 {
     button {
       padding: 0 40px;
       margin-bottom: 15px;
-    }
-  
-    .error {
-      color: red;
-      margin-top: 1em;
     }
   }
 }
@@ -46,14 +46,18 @@ mat-divider{
     overflow: hidden;
     display: flex;
     flex-direction: column;
-  
+
+    .mat-card-title {
+      line-height: 1.1em;
+    }
+
     button {
       align-self: center;
     }
   }
   
   .spacer {
-      flex: 1 1 auto;
+    flex: 1 1 auto;
   }
   
   .mat-card-content {

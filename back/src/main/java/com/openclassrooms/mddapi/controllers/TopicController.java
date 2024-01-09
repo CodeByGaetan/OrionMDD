@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ public class TopicController {
     @Autowired
     private TopicMapper topicMapper;
 
+    @Transactional
     @GetMapping("/topics")
     public ResponseEntity<?> getAll(@RequestParam boolean userOnly) {
 

@@ -5,6 +5,7 @@
   <span class="spacer"></span>
   <button mat-button (click)="toggleSort()">Trier par {{asc ? "↓" : "↑"}}</button>
 </div>
+<p *ngIf="onError" class="error">Erreur lors de la récupération des articles</p>
 <div class="container">
   <mat-card
     *ngFor="let post of posts"

@@ -27,15 +27,21 @@ public class AuthController {
     @Autowired
     private Validator validator;
 
+    /**
+     * 
+     * @param userDto coucou
+     * @return
+     */
     @PostMapping("/auth/signup")
     public ResponseEntity<?> signUp(@Validated(SignUpValidation.class) @RequestBody UserDto userDto) {
 
         try {
             String jwtResponse = authService.signUp(userDto);
             return ResponseEntity.ok().body(new MessageResponse(jwtResponse));
+
         } catch (Exception e) {
             String message = e.getMessage();
-            return ResponseEntity.badRequest().body(new MessageResponse(message));
+            return ResponseEntity.badRequest().body(new MessageResponse(message, 1));
         }
 
     }
@@ -47,7 +53,8 @@ public class AuthController {
         Boolean signInNameNotValid = !validator.validate(userDto, SignInNameValidation.class).isEmpty();
 
         if (signInEmailNotValid && signInNameNotValid) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Email, nom ou mot de passe non valide"));
+            // Ajouter les cas d'erreur possible
+            return ResponseEntity.badRequest().body(new MessageResponse("Email, nom ou mot de passe non valide", 1));
         }
 
         String jwtResponse = authService.signIn(userDto);

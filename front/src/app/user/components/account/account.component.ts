@@ -5,6 +5,7 @@ import { UserRequest } from 'src/app/user/interfaces/userRequest.interface';
 import { Topic } from 'src/app/topics/interfaces/topic.interface';
 import { TopicService } from 'src/app/topics/services/topic.service';
 import { UserService } from 'src/app/user/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-account',
@@ -33,29 +34,34 @@ export class AccountComponent implements OnInit {
 
   public topics!: Topic[];
 
-  public onError = false;
+  public onErrorUser = false;
+  public onErrorTopics = false;
 
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private topicService: TopicService
+    private topicService: TopicService,
+    private snackBar: MatSnackBar
   ) { }
 
   private fetchTopics(): void {
     this.topicService.getAll(true).pipe(take(1)).subscribe({
       next: (response) => {
         this.topics = response.topics;
-      }
+      },
+      error: () => this.onErrorTopics = true
     })
   }
 
   public ngOnInit(): void {
-    this.userService.getUserInfo().pipe(take(1)).subscribe(userInfo => {
+    this.userService.getUserInfo().pipe(take(1)).subscribe({
+      next: (userInfo) => {
       this.userForm.patchValue({
         name: userInfo.name,
         email: userInfo.email
-      });
-    });
+      })},
+      error: () => this.onErrorUser = true
+  });
 
     this.fetchTopics();
   }
@@ -64,13 +70,16 @@ export class AccountComponent implements OnInit {
     const userRequest = this.userForm.value as UserRequest;
     this.userService.updateUser(userRequest).pipe(take(1)).subscribe({
       next: (_: void) => { },
-      error: () => this.onError = true
+      error: () => this.onErrorUser = true
     });
   }
 
   public unSubscribe(topicId: number) {
-    this.userService.unSubscribeTopic(topicId).pipe(take(1)).subscribe(() => {
-      this.fetchTopics();
+    this.userService.unSubscribeTopic(topicId).pipe(take(1)).subscribe( {
+      next: () => this.fetchTopics(),
+      error: () => this.snackBar.open("Erreur lors du désabonnement", "Fermer", {
+        panelClass: 'error-snackbar'
+      })
     });
   }
 
