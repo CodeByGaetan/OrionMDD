@@ -1,0 +1,13 @@
+<mat-divider></mat-divider>
+<mat-paginator
+  #paginator
+  (page)="handlePageEvent($event)"
+  [length]="totalSize"
+  [pageSize]="pageSize"
+  [showFirstLastButtons]="false"
+  [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+  [hidePageSize]="hidePageSize"
+  [pageIndex]="pageIndex"
+  aria-label="Select page"
+>
+</mat-paginator>

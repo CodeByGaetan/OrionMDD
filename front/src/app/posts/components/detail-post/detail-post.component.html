@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="div1">
+    <button mat-icon-button routerLink="/posts">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+
+  <ng-container *ngIf="post$ | async as post">
+    <div class="div2">
+      <h1>{{ post.title }}</h1>
+    </div>
+
+    <div class="div3">
+      <div class="subtitles">
+        <p>{{ post.createdAt | date : "dd/MM/yy" }}</p>
+        <p>{{ post.userName }}</p>
+        <p>{{ post.topicTitle }}</p>
+      </div>
+
+      <p>{{ post.content }}</p>
+
+      <mat-divider></mat-divider>
+
+      <h2>Commentaires</h2>
+
+      <p *ngIf="onError" class="error">
+        Erreur lors de la récupération des commentaires
+      </p>
+
+      <div class="commentsContainer">
+        <div class="comment" *ngFor="let comment of comments$ | async">
+          <div class="username">
+            <p>{{ comment.userName }}</p>
+          </div>
+          <div class="bubble">
+            <p>{{ comment.content }}</p>
+          </div>
+        </div>
+      </div>
+
+      <form
+        [formGroup]="commentForm"
+        #commentNgForm="ngForm"
+        (ngSubmit)="commentPost()"
+      >
+        <div class="textAreaContainer">
+          <mat-form-field appearance="outline">
+            <mat-label>Écrivez ici votre commentaire</mat-label>
+            <textarea
+              matInput
+              id="content"
+              formControlName="content"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="buttonContainer">
+          <button
+            mat-mini-fab
+            color="primary"
+            type="submit"
+            [disabled]="commentForm.invalid"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+        <!-- <p *ngIf="onError" class="error">Erreur lors de l'ajout du commentaire</p> -->
+      </form>
+    </div>
+  </ng-container>
+</div>

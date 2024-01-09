@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,10 @@ public class UserService {
         return user;
     }
 
-    public List<Topic> getUserSuscribedTopics(User user) {
-        return user.getTopics();
+    public List<Integer> getSubscribedTopicIds() {
+        List<Topic> subscribedTopics = getCurrentUser().getTopics();
+
+        return subscribedTopics.stream().map(topic -> topic.getId()).collect(Collectors.toList());
     }
 
     public void subscribeTopic(Integer id) throws Exception {

@@ -1,0 +1,50 @@
+.center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mat-icon-button {
+  margin: 10px;
+  transform: scale(1.2);
+  align-self: flex-start;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+
+  mat-form-field {
+    width: 100%;
+
+    .mat-hint {
+      color: red;
+    }
+  }
+
+  textarea {
+    height: 180px;
+  }
+
+  button {
+    padding: 0 40px;
+    margin-bottom: 15px;
+  }
+
+  .error {
+    color: red;
+    margin-top: 1em;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  form {
+    width: 90%;
+  }
+}

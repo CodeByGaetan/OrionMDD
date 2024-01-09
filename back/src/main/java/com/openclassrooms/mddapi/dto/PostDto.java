@@ -6,17 +6,22 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDto {
 
     private Integer id;
 
     @NotNull
     private Integer topicId;
+
+    private String topicTitle;
 
     @NotBlank
     @Size(max = 255)

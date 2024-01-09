@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { ListPostComponent } from './pages/list-post/list-post.component';
-import { ListTopicComponent } from './pages/list-topic/list-topic.component';
-import { AccountComponent } from './pages/account/account.component';
-import { DetailPostComponent } from './pages/detail-post/detail-post.component';
-import { NewPostComponent } from './pages/new-post/new-post.component';
+import { HomeComponent } from './auth/components/home/home.component';
+import { SignInComponent } from './auth/components/sign-in/sign-in.component';
+import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
+import { ListPostComponent } from './posts/components/list-post/list-post.component';
+import { ListTopicComponent } from './topics/components/list-topic/list-topic.component';
+import { AccountComponent } from './user/components/account/account.component';
+import { DetailPostComponent } from './posts/components/detail-post/detail-post.component';
+import { NewPostComponent } from './posts/components/new-post/new-post.component';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
 const routes: Routes = [
+  { path: 'home', component: HomeComponent },
   { path: 'signin', component: SignInComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'posts', component: ListPostComponent },
@@ -19,11 +21,13 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'posts/create', component: NewPostComponent },
   { path: 'posts/:id', component: DetailPostComponent },
-  { path: '', component: HomeComponent },
+  { path: 'not-found', component: NotFoundComponent},
+  { path: '', redirectTo: '/posts', pathMatch: 'full' },
+  { path: '**', redirectTo: '/not-found', pathMatch: 'full'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

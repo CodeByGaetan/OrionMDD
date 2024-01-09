@@ -1,0 +1,53 @@
+.center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mat-icon-button {
+  margin: 20px;
+  transform: scale(1.2);
+  align-self: flex-start;
+}
+
+img {
+  display: none;
+  width: 80%;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+
+  label {
+    align-self: flex-start;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  
+    .mat-hint {
+      color: red;
+    }
+  }
+
+}
+
+
+
+@media screen and (max-width: 600px) {
+  form {
+    width: 90%;
+  }
+
+  img {
+    display: block;
+  }
+
+  app-toolbar {
+    display: none;
+  }
+}

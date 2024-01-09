@@ -1,0 +1,77 @@
+h1 {
+  font-weight: bold;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.error {
+  text-align: center;
+  color: red;
+}
+
+.userInfoContainer {
+  display: flex;
+  justify-content: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+  
+    mat-form-field {
+      width: 100%;
+    }
+  
+    button {
+      padding: 0 40px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+mat-divider{
+  margin: 0 30px;
+}
+
+.topicsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin: 15px;
+
+  mat-card {
+    background-color: rgba(211, 211, 211, 0.415);
+    word-wrap: break-word;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .mat-card-title {
+      line-height: 1.1em;
+    }
+
+    button {
+      align-self: center;
+    }
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .mat-card-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topicsContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
