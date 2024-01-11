@@ -1,10 +1,10 @@
 -- Example values
 INSERT INTO `USERS` (`name`, `email`, `password`) VALUES
-('John Doe', 'johndoe@example.com', 'hashed_password_1'),
-('Alice Smith', 'alicesmith@example.com', 'hashed_password_2'),
-('Bob Johnson', 'bobjohnson@example.com', 'hashed_password_3'),
-('Emma Brown', 'emmabrown@example.com', 'hashed_password_4'),
-('Alex Wilson', 'alexwilson@example.com', 'hashed_password_5');
+('John', 'johndoe@example.com', '$2y$10$.qkbukzzX21D.bqbI.B2R.tvWP90o/Y16QRWVLodw51BHft7ZWbc.'),
+('AliceSmith', 'alicesmith@example.com', '$2y$10$.qkbukzzX21D.bqbI.B2R.tvWP90o/Y16QRWVLodw51BHft7ZWbc.'),
+('BobJohnson', 'bobjohnson@example.com', '$2y$10$.qkbukzzX21D.bqbI.B2R.tvWP90o/Y16QRWVLodw51BHft7ZWbc.'),
+('EmmaBrown', 'emmabrown@example.com', '$2y$10$.qkbukzzX21D.bqbI.B2R.tvWP90o/Y16QRWVLodw51BHft7ZWbc.'),
+('AlexWilson', 'alexwilson@example.com', '$2y$10$.qkbukzzX21D.bqbI.B2R.tvWP90o/Y16QRWVLodw51BHft7ZWbc.');
 
 INSERT INTO `TOPICS` (`title`, `description`) VALUES
 ('Cybersecurity', 'Explorez les concepts et les stratégies de sécurité informatique pour protéger les systèmes et les données contre les menaces en ligne.'),

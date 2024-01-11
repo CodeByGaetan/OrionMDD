@@ -11,12 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.responses.MessageResponse;
+import com.openclassrooms.mddapi.others.exceptions.AuthException;
+import com.openclassrooms.mddapi.others.requests.LoginRequest;
+import com.openclassrooms.mddapi.others.responses.AuthErrorResponse;
+import com.openclassrooms.mddapi.others.responses.AuthJwtResponse;
+import com.openclassrooms.mddapi.others.validations.groups.SignInEmailValidation;
+import com.openclassrooms.mddapi.others.validations.groups.SignInNotBlanckValidation;
+import com.openclassrooms.mddapi.others.validations.groups.SignUpPasswordValidation;
+import com.openclassrooms.mddapi.others.validations.groups.SignUpValidation;
 import com.openclassrooms.mddapi.services.AuthService;
-import com.openclassrooms.mddapi.validations.groups.SignInEmailValidation;
-import com.openclassrooms.mddapi.validations.groups.SignInNameValidation;
-import com.openclassrooms.mddapi.validations.groups.SignUpValidation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Authentication", description = "API for authentication operations")
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -29,37 +37,64 @@ public class AuthController {
 
     /**
      * 
-     * @param userDto coucou
+     * @param userDto
      * @return
      */
+    @Operation(summary = "Sign up a user")
     @PostMapping("/auth/signup")
     public ResponseEntity<?> signUp(@Validated(SignUpValidation.class) @RequestBody UserDto userDto) {
 
+        Boolean signUpPasswordValid = validator.validate(userDto,
+                SignUpPasswordValidation.class).isEmpty();
+        if (!signUpPasswordValid) {
+            return ResponseEntity.badRequest().body(new AuthErrorResponse("Password not valid", 3));
+        }
+
         try {
             String jwtResponse = authService.signUp(userDto);
-            return ResponseEntity.ok().body(new MessageResponse(jwtResponse));
-
-        } catch (Exception e) {
-            String message = e.getMessage();
-            return ResponseEntity.badRequest().body(new MessageResponse(message, 1));
+            return ResponseEntity.ok().body(new AuthJwtResponse(jwtResponse));
+        } catch (AuthException e) {
+            return ResponseEntity.badRequest().body(new AuthErrorResponse(e.getMessage(), e.getCodeError()));
         }
-
     }
 
+    /**
+     * 
+     * @param loginRequest
+     * @return
+     */
+    @Operation(summary = "Sign in a user")
     @PostMapping("/auth/signin")
-    public ResponseEntity<?> signIn(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> signIn(@RequestBody LoginRequest loginRequest) {
+               
+        Boolean signInNotBlanckValid = validator.validate(loginRequest,
+                SignInNotBlanckValidation.class).isEmpty();
 
-        Boolean signInEmailNotValid = !validator.validate(userDto, SignInEmailValidation.class).isEmpty();
-        Boolean signInNameNotValid = !validator.validate(userDto, SignInNameValidation.class).isEmpty();
+        Boolean signInEmailValid = validator.validate(loginRequest,
+                SignInEmailValidation.class).isEmpty();
 
-        if (signInEmailNotValid && signInNameNotValid) {
-            // Ajouter les cas d'erreur possible
-            return ResponseEntity.badRequest().body(new MessageResponse("Email, nom ou mot de passe non valide", 1));
+        if(!signInNotBlanckValid) {
+            return ResponseEntity.badRequest().body(new AuthErrorResponse("One or more fields are empty", 0));
+
+        // Essayer de se connecter avec un email
+        } else if (signInEmailValid) {
+            try {
+                String jwtResponse = authService.signInWithEmail(loginRequest);
+                return ResponseEntity.ok().body(new AuthJwtResponse(jwtResponse));
+            } catch (AuthException e) {
+                return ResponseEntity.badRequest().body(new AuthErrorResponse(e.getMessage(), e.getCodeError()));
+            }
+
+        // Essayer de se connecter avec un name
+        } else {
+            try {
+                String jwtResponse = authService.signInWithName(loginRequest);
+                return ResponseEntity.ok().body(new AuthJwtResponse(jwtResponse));
+            } catch (AuthException e) {
+                return ResponseEntity.badRequest().body(new AuthErrorResponse(e.getMessage(), e.getCodeError()));
+            }
+
         }
-
-        String jwtResponse = authService.signIn(userDto);
-
-        return ResponseEntity.ok().body(new MessageResponse(jwtResponse));
     }
 
 }

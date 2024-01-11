@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.validations.password;
+package com.openclassrooms.mddapi.others.validations.password;
 
 import java.lang.annotation.*;
 

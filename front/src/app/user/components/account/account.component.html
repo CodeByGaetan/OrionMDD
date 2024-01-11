@@ -18,7 +18,7 @@
       Sauvegarder
     </button>
     <p *ngIf="onErrorUser" class="error">Erreur lors de la mise à jour de l'utilisateur</p>
-    <button mat-button>Se déconnecter</button>
+    <button mat-button (click)="logOut()">Se déconnecter</button>
   </form>
 </div>
 

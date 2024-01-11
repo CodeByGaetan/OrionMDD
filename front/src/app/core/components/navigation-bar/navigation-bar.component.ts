@@ -22,11 +22,12 @@ export class NavigationBarComponent implements OnInit {
   }
 
   public showToolbar(): boolean {
-    const cond1 = this.router.url === '/home';
-    const cond2 =  this.router.url === '/not-found';
-    const cond3 = this.router.url === '/signin' && this.screenWidth < 600;
-    const cond4 = this.router.url === '/signup' && this.screenWidth < 600;
-    if (cond1 || cond2 || cond3 || cond4) {
+    const withoutToolbar = ['/home', '/not-found', '/expired'];
+    const screenCondition = ['/signin', '/signup'];
+
+    const cond1 = withoutToolbar.includes(this.router.url);
+    const cond2 = screenCondition.includes(this.router.url) && this.screenWidth < 600;
+    if (cond1 || cond2) {
       return false;
     }
     return true;

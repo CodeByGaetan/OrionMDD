@@ -6,6 +6,8 @@ import { Topic } from 'src/app/topics/interfaces/topic.interface';
 import { TopicService } from 'src/app/topics/services/topic.service';
 import { UserService } from 'src/app/user/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SessionService } from 'src/app/core/services/session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -41,6 +43,7 @@ export class AccountComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private topicService: TopicService,
+    private sessionService: SessionService,
     private snackBar: MatSnackBar
   ) { }
 
@@ -72,6 +75,10 @@ export class AccountComponent implements OnInit {
       next: (_: void) => { },
       error: () => this.onErrorUser = true
     });
+  }
+
+  public logOut(): void {
+    this.sessionService.logOut();
   }
 
   public unSubscribe(topicId: number) {

@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { SignUpRequest } from '../../interfaces/signUpRequest.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SessionService } from '../../../core/services/session.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -38,21 +39,28 @@ export class SignUpComponent {
   });
 
   public codeError = 0;
+  public generalError = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private sessionService: SessionService,
     private router: Router
   ) { }
 
   public onSubmit(): void {
     const signUpRequest = this.signUpForm.value as SignUpRequest;
     this.authService.signUp(signUpRequest).subscribe({
-      next: (_: void) => {
+      next: (response) => {
+        this.sessionService.logIn(response);
         this.router.navigateByUrl('/');
       },
       error: (error : HttpErrorResponse) => {
-        this.codeError = error.error.codeError;
+        if (error.error.codeError) {
+          this.codeError = error.error.codeError;
+        } else {
+          this.generalError = true;
+        }
       }
     });
   }

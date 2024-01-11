@@ -7,7 +7,7 @@
   <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
     <label>E-mail ou nom d'utilisateur</label>
     <mat-form-field appearance="outline">
-      <input matInput id="email" formControlName="email" />
+      <input matInput id="username" formControlName="username" />
       <mat-hint *ngIf="codeError === 1">Email inconnu</mat-hint>
       <mat-hint *ngIf="codeError === 2">Nom d'utilisateur inconnu</mat-hint>
     </mat-form-field>
@@ -25,4 +25,5 @@
       Se connecter
     </button>
   </form>
+  <p *ngIf="generalError" class="error">Erreur lors la connexion</p>
 </div>

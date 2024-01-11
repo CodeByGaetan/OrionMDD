@@ -34,6 +34,9 @@ import { NavigationBarComponent } from './core/components/navigation-bar/navigat
 import { SpinnerComponent } from './core/components/spinner/spinner.component';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { UnauthInterceptor } from './core/interceptors/unauth.interceptor';
+import { ExpiredComponent } from './core/components/expired/expired.component';
 
 
 const materialModules = [
@@ -67,7 +70,8 @@ const materialModules = [
     NavigationBarComponent,
     PaginationComponent,
     SpinnerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ExpiredComponent
   ],
   imports: [
     BrowserModule,
@@ -77,11 +81,11 @@ const materialModules = [
     HttpClientModule,
     ...materialModules
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoaderInterceptor,
-    multi: true
-  }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
