@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.responses.MessageResponse;
 import com.openclassrooms.mddapi.services.UserService;
 import com.openclassrooms.mddapi.validations.groups.UpdateUserValidation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Users", description = "API for user information")
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -31,6 +36,11 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 
+     * @return
+     */
+    @Operation(summary = "Get the current user info")
     @GetMapping("/user")
     public ResponseEntity<?> getCurrentUser() {
         User user = userService.getCurrentUser();
@@ -38,16 +48,28 @@ public class UserController {
         return ResponseEntity.ok().body(userMapper.toDto(user));
     }
 
+    /**
+     * 
+     * @param userDto
+     * @return
+     */
+    @Operation(summary = "Update the current user info")
     @PutMapping("/user")
     public ResponseEntity<?> updateCurrentUser(@Validated(UpdateUserValidation.class) @RequestBody UserDto userDto) {
         try {
             userService.updateCurrentUser(userDto);
-            return ResponseEntity.ok().body(new MessageResponse("User info updated !"));
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
     
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @Operation(summary = "Subscribe the user to a topic")
     @Transactional
     @PostMapping("/user/topics/{id}")
     public ResponseEntity<?> subscribeTopic(@PathVariable Integer id) {
@@ -60,6 +82,12 @@ public class UserController {
         }
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @Operation(summary = "Unsubscribe the user to a topic")
     @Transactional
     @DeleteMapping("/user/topics/{id}")
     public ResponseEntity<?> unSubscribeTopic(@PathVariable Integer id) {

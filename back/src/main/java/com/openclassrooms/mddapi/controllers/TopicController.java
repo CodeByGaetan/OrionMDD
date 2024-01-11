@@ -18,6 +18,12 @@ import com.openclassrooms.mddapi.responses.TopicsResponse;
 import com.openclassrooms.mddapi.services.TopicService;
 import com.openclassrooms.mddapi.services.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Topics", description = "API for CRUD operations on Topics")
 @RestController
 @RequestMapping("/api")
 public class TopicController {
@@ -31,6 +37,12 @@ public class TopicController {
     @Autowired
     private TopicMapper topicMapper;
 
+    /**
+     * 
+     * @param userOnly
+     * @return
+     */
+    @Operation(summary = "Get all topics filtered")
     @Transactional
     @GetMapping("/topics")
     public ResponseEntity<?> getAll(@RequestParam boolean userOnly) {

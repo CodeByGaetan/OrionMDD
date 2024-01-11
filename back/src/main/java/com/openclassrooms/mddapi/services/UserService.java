@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.UserDto;
@@ -24,9 +26,11 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    // Modifier cette méthode pour récuperer l'utilisateur dans le Security Contexte
     public User getCurrentUser() {
-        User user = getById(1);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        User user = findByEmail(userEmail);
+
         return user;
     }
 

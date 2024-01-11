@@ -22,10 +22,15 @@ import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.responses.MessageResponse;
 import com.openclassrooms.mddapi.responses.PageResponse;
 import com.openclassrooms.mddapi.services.PostService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Posts", description = "API for CRUD operations on Posts")
 @RestController
 @RequestMapping("/api")
 public class PostController {
@@ -39,6 +44,15 @@ public class PostController {
     @Autowired
     private CommentMapper commentMapper;
 
+    /**
+     * 
+     * @param page
+     * @param size
+     * @param asc
+     * @return
+     * @throws InterruptedException
+     */
+    @Operation(summary = "Get all posts paged and sorted")
     @GetMapping("/posts")
     public ResponseEntity<?> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) throws InterruptedException {
 
@@ -51,6 +65,12 @@ public class PostController {
         return ResponseEntity.ok().body(pageResponse);
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @Operation(summary = "Get a post by Id")
     @GetMapping("/posts/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
 
@@ -62,20 +82,31 @@ public class PostController {
         return ResponseEntity.ok().body(postMapper.toDto(post));
     }
 
+    /**
+     * 
+     * @param postDto
+     * @return
+     */
+    @Operation(summary = "Create a post")
     @PostMapping("/posts")
-    // TRANSACTIONAL ?
     public ResponseEntity<?> createPost(@Valid @RequestBody PostDto postDto) {
 
         Post newPost = postMapper.toEntity(postDto);
         if (newPost.getTopic() == null) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Topic from topic_id not found"));
+            return ResponseEntity.notFound().build();
         }
 
         postService.create(newPost);
 
-        return ResponseEntity.ok().body(new MessageResponse("Post created !"));
+        return ResponseEntity.ok().build();
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @Operation(summary = "Get the post comments")
     @GetMapping("/posts/{id}/comments")
     @Transactional
     public ResponseEntity<?> getCommentsFromPost(@PathVariable Integer id) {
@@ -90,6 +121,13 @@ public class PostController {
         return ResponseEntity.ok().body(commentMapper.toDto(comments));
     }
 
+    /**
+     * 
+     * @param id
+     * @param commentDto
+     * @return
+     */
+    @Operation(summary = "Create comment on the post")
     @PostMapping("/posts/{id}/comments")
     public ResponseEntity<?> createCommentOnPost(@PathVariable Integer id, @Valid @RequestBody CommentDto commentDto) {
 
@@ -102,7 +140,7 @@ public class PostController {
 
         postService.createCommentOnPost(post, newComment);
 
-        return ResponseEntity.ok().body(new MessageResponse("Post commented !"));
+        return ResponseEntity.ok().build();
     }
 
 }
