@@ -4,9 +4,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.openclassrooms.mddapi.validations.groups.SignUpValidation;
-import com.openclassrooms.mddapi.validations.groups.UpdateUserValidation;
-import com.openclassrooms.mddapi.validations.password.ValidPassword;
+import com.openclassrooms.mddapi.others.validations.groups.SignUpPasswordValidation;
+import com.openclassrooms.mddapi.others.validations.groups.SignUpValidation;
+import com.openclassrooms.mddapi.others.validations.groups.UpdateUserValidation;
+import com.openclassrooms.mddapi.others.validations.password.ValidPassword;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class UserDto {
     @NotBlank(groups = {SignUpValidation.class, UpdateUserValidation.class})
     private String name;
 
-    @ValidPassword(groups = {SignUpValidation.class})
+    @ValidPassword(groups = {SignUpPasswordValidation.class})
+    @NotBlank(groups = {SignUpValidation.class})
     private String password;
 }

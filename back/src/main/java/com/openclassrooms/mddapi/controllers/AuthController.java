@@ -11,14 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.exceptions.AuthException;
-import com.openclassrooms.mddapi.requests.LoginRequest;
-import com.openclassrooms.mddapi.responses.AuthErrorResponse;
-import com.openclassrooms.mddapi.responses.AuthJwtResponse;
+import com.openclassrooms.mddapi.others.exceptions.AuthException;
+import com.openclassrooms.mddapi.others.requests.LoginRequest;
+import com.openclassrooms.mddapi.others.responses.AuthErrorResponse;
+import com.openclassrooms.mddapi.others.responses.AuthJwtResponse;
+import com.openclassrooms.mddapi.others.validations.groups.SignInEmailValidation;
+import com.openclassrooms.mddapi.others.validations.groups.SignInNotBlanckValidation;
+import com.openclassrooms.mddapi.others.validations.groups.SignUpPasswordValidation;
+import com.openclassrooms.mddapi.others.validations.groups.SignUpValidation;
 import com.openclassrooms.mddapi.services.AuthService;
-import com.openclassrooms.mddapi.validations.groups.SignInEmailValidation;
-import com.openclassrooms.mddapi.validations.groups.SignInNotBlanckValidation;
-import com.openclassrooms.mddapi.validations.groups.SignUpValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,6 +43,13 @@ public class AuthController {
     @Operation(summary = "Sign up a user")
     @PostMapping("/auth/signup")
     public ResponseEntity<?> signUp(@Validated(SignUpValidation.class) @RequestBody UserDto userDto) {
+
+        Boolean signUpPasswordValid = validator.validate(userDto,
+                SignUpPasswordValidation.class).isEmpty();
+        if (!signUpPasswordValid) {
+            return ResponseEntity.badRequest().body(new AuthErrorResponse("Password not valid", 3));
+        }
+
         try {
             String jwtResponse = authService.signUp(userDto);
             return ResponseEntity.ok().body(new AuthJwtResponse(jwtResponse));

@@ -17,9 +17,6 @@ import com.openclassrooms.mddapi.models.User;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    // @Autowired
-    // private UserRepository userRepository;
-
     @Autowired
     private UserService userService;
 

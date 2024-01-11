@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.responses;
+package com.openclassrooms.mddapi.others.responses;
 
 import java.util.List;
 

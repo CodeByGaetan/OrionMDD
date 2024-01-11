@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { SignInRequest } from '../interfaces/signInRequest.interface';
 import { Observable } from 'rxjs';
 import { SignUpRequest } from '../interfaces/signUpRequest.interface';
+import { SessionInformation } from '../../core/interfaces/sessionInformation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,12 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public signIn(signInRequest: SignInRequest) : Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/signin`, signInRequest);
+  public signIn(signInRequest: SignInRequest) : Observable<SessionInformation> {
+    return this.httpClient.post<SessionInformation>(`${this.pathService}/signin`, signInRequest);
   }
 
-  public signUp(signUpRequest: SignUpRequest) : Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/signup`, signUpRequest);
+  public signUp(signUpRequest: SignUpRequest) : Observable<SessionInformation> {
+    return this.httpClient.post<SessionInformation>(`${this.pathService}/signup`, signUpRequest);
   }
-
 
 }

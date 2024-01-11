@@ -22,7 +22,7 @@ import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.responses.PageResponse;
+import com.openclassrooms.mddapi.others.responses.PageResponse;
 import com.openclassrooms.mddapi.services.PostService;
 
 import io.swagger.v3.oas.annotations.Operation;

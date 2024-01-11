@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.models.Topic;
-import com.openclassrooms.mddapi.responses.TopicsResponse;
+import com.openclassrooms.mddapi.others.responses.TopicsResponse;
 import com.openclassrooms.mddapi.services.TopicService;
 import com.openclassrooms.mddapi.services.UserService;
 

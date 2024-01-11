@@ -9,25 +9,27 @@ import { AccountComponent } from './user/components/account/account.component';
 import { DetailPostComponent } from './posts/components/detail-post/detail-post.component';
 import { NewPostComponent } from './posts/components/new-post/new-post.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { UnauthGuard } from './core/guards/unauth.guard';
+import { ExpiredComponent } from './core/components/expired/expired.component';
 
-// consider a guard combined with canLoad / canActivate route option
-// to manage unauthenticated user to access private routes
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'signin', component: SignInComponent },
-  { path: 'signup', component: SignUpComponent },
-  { path: 'posts', component: ListPostComponent },
-  { path: 'topics', component: ListTopicComponent },
-  { path: 'account', component: AccountComponent },
-  { path: 'posts/create', component: NewPostComponent },
-  { path: 'posts/:id', component: DetailPostComponent },
-  { path: 'not-found', component: NotFoundComponent},
+  { path: 'home', component: HomeComponent, canActivate: [UnauthGuard] },
+  { path: 'signin', component: SignInComponent, canActivate: [UnauthGuard] },
+  { path: 'signup', component: SignUpComponent, canActivate: [UnauthGuard] },
+  { path: 'posts', component: ListPostComponent, canActivate: [AuthGuard] },
+  { path: 'topics', component: ListTopicComponent, canActivate: [AuthGuard] },
+  { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: 'posts/create', component: NewPostComponent, canActivate: [AuthGuard] },
+  { path: 'posts/:id', component: DetailPostComponent, canActivate: [AuthGuard] },
+  { path: 'not-found', component: NotFoundComponent, canActivate: [AuthGuard] },
+  { path: 'expired', component: ExpiredComponent, canActivate: [UnauthGuard] },
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
-  { path: '**', redirectTo: '/not-found', pathMatch: 'full'}
+  { path: '**', redirectTo: '/not-found', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

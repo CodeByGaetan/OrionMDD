@@ -17,8 +17,6 @@ export class PaginationComponent implements OnInit {
   hidePageSize = false;
   showPageSizeOptions = true;
 
-  // pageEvent!: PageEvent;
-
   constructor() { }
 
   ngOnInit(): void {

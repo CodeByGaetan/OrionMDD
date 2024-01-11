@@ -8,12 +8,12 @@
     <label>Nom d'utilisateur</label>
     <mat-form-field appearance="outline">
       <input matInput id="name" formControlName="name" />
-      <mat-hint *ngIf="codeError === 1">Nom d'utilisateur déjà utilisé</mat-hint>
+      <mat-hint *ngIf="codeError === 2">Nom d'utilisateur déjà utilisé</mat-hint>
     </mat-form-field>
     <label>E-mail</label>
     <mat-form-field appearance="outline">
       <input matInput id="email" formControlName="email" />
-      <mat-hint *ngIf="codeError === 2">Email déjà utilisé</mat-hint>
+      <mat-hint *ngIf="codeError === 1">Email déjà utilisé</mat-hint>
     </mat-form-field>
     <label>Mot de passe</label>
     <mat-form-field appearance="outline">
@@ -29,4 +29,5 @@
       S'inscrire
     </button>
   </form>
+  <p *ngIf="generalError" class="error">Erreur lors l'inscription</p>
 </div>

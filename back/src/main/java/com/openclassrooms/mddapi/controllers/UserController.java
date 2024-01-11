@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.others.validations.groups.UpdateUserValidation;
 import com.openclassrooms.mddapi.services.UserService;
-import com.openclassrooms.mddapi.validations.groups.UpdateUserValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

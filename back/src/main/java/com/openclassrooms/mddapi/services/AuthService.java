@@ -8,9 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.exceptions.AuthException;
 import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.requests.LoginRequest;
+import com.openclassrooms.mddapi.others.exceptions.AuthException;
+import com.openclassrooms.mddapi.others.requests.LoginRequest;
 
 @Service
 public class AuthService {

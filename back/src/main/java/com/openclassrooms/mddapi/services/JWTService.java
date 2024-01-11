@@ -23,15 +23,17 @@ public class JWTService {
      * @return token JWT
      */
     public String generateToken(String email) {
+
         Instant now = Instant.now();
+        Instant expiration = now.plus(1, ChronoUnit.DAYS);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.DAYS))
+                .expiresAt(expiration)
                 .subject(email)
                 .build();
-
+        
         JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters
                 .from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
 

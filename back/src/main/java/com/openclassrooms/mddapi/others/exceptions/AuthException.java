@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.exceptions;
+package com.openclassrooms.mddapi.others.exceptions;
 
 public class AuthException extends Exception {
 

@@ -27,9 +27,13 @@ public class SpringSecurityConfiguration {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
     private String jwtKey = "3a0KpWMFcYp5TjxylJVx5GOZB12SoX63";
 
-    public static final String[] allowedRoutes = { "/api/login", "/api/auth/*", "/swagger-ui/*", "/v3/api-docs/*", "/v3/api-docs" };
+    public static final String[] allowedRoutes = { "/api/login", "/api/auth/*", "/swagger-ui/*", "/v3/api-docs/*",
+            "/v3/api-docs" };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,8 +46,10 @@ public class SpringSecurityConfiguration {
                     }
                     request.anyRequest().authenticated();
                 })
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
-                // .httpBasic(Customizer.withDefaults())
+                .oauth2ResourceServer((oauth2) -> oauth2
+                        .jwt(Customizer.withDefaults())
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                )
             ;
 
         return http.build();
