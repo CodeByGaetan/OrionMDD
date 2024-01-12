@@ -45,16 +45,16 @@ public class PostController {
     private CommentMapper commentMapper;
 
     /**
+     * Get all posts filtered by page number and page size and sorted by created date 
      * 
-     * @param page
-     * @param size
-     * @param asc
-     * @return
-     * @throws InterruptedException
+     * @param page The page number requested
+     * @param size The number of items per page
+     * @param asc Whether the articles are sorted in ascending order or in descending order
+     * @return List of filtered posts and the total number of posts in the database 
      */
     @Operation(summary = "Get all posts paged and sorted")
     @GetMapping("/posts")
-    public ResponseEntity<?> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) throws InterruptedException {
+    public ResponseEntity<?> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) {
 
         Page<Post> postsPage = postService.getAllPagedSorted(page, size, asc);
         List<PostDto> postDtos = postMapper.toDto(postsPage.getContent());
@@ -66,9 +66,10 @@ public class PostController {
     }
 
     /**
+     * Get a post by its Id
      * 
-     * @param id
-     * @return
+     * @param id The number identifying the post
+     * @return The post identified
      */
     @Operation(summary = "Get a post by Id")
     @GetMapping("/posts/{id}")
@@ -83,9 +84,10 @@ public class PostController {
     }
 
     /**
+     * Create a post from a valid post request
      * 
-     * @param postDto
-     * @return
+     * @param postDto The post request containing a title, a content and a topic Id
+     * @return Ok status response
      */
     @Operation(summary = "Create a post")
     @PostMapping("/posts")
@@ -102,9 +104,10 @@ public class PostController {
     }
 
     /**
+     * Get all the comments of the identified post 
      * 
-     * @param id
-     * @return
+     * @param id The number identifying the post containing the requested comments 
+     * @return The comments list
      */
     @Operation(summary = "Get the post comments")
     @GetMapping("/posts/{id}/comments")
@@ -122,10 +125,11 @@ public class PostController {
     }
 
     /**
+     * Create a comment on a post from a valid comment request
      * 
-     * @param id
-     * @param commentDto
-     * @return
+     * @param id The number identifying the post we want to comment on
+     * @param commentDto The comment request containing a content
+     * @return Ok status response
      */
     @Operation(summary = "Create comment on the post")
     @PostMapping("/posts/{id}/comments")

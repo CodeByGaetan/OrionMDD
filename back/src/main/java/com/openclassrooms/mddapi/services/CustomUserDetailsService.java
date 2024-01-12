@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.User;
-// import com.openclassrooms.mddapi.repositories.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -20,6 +19,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    /**
+     * Get user details, from email, of a user in database
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.findByEmail(email);

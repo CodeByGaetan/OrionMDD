@@ -38,9 +38,10 @@ public class TopicController {
     private TopicMapper topicMapper;
 
     /**
+     * Get all topics and user subscibed topics
      * 
-     * @param userOnly
-     * @return
+     * @param userOnly Whether only the user subscribed topics or all the topics
+     * @return All topics and subscribed topic Ids Or only subscribed topics
      */
     @Operation(summary = "Get all topics filtered")
     @Transactional

@@ -18,9 +18,10 @@ public class JWTService {
     private JwtEncoder jwtEncoder;
 
     /**
+     * Generate JWT token from user email
      * 
-     * @param email
-     * @return token JWT
+     * @param email of the user
+     * @return JWT token to authenticate future requests
      */
     public String generateToken(String email) {
 

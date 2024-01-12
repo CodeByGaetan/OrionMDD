@@ -14,10 +14,21 @@ public class TopicService {
     @Autowired
     private TopicRepository topicRepository;
 
+    /**
+     * Get all topics
+     * 
+     * @return All topics
+     */
     public List<Topic> getAll() {
         return topicRepository.findAll();
     }
 
+    /**
+     * Get a topic by its Id
+     * 
+     * @param id The number identifying the topic
+     * @return The identified topic
+     */
     public Topic getById(Integer id) {
         return topicRepository.findById(id).orElse(null);
     }

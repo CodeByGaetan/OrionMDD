@@ -1,27 +1,53 @@
-# P6-Full-Stack-reseau-dev
+# MDD - A developers social network
 
-## Front
+A complete web application, from Back-end to Front-end, to create a developers social network !
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+The Front-end uses :  
+![Static Badge](https://img.shields.io/badge/Angular-14.1.3-red)
+![Static Badge](https://img.shields.io/badge/Angular_Material-14.2.5-blue)
 
-Don't forget to install your node_modules before starting (`npm install`).
+The Back-end uses :  
+![Static Badge](https://img.shields.io/badge/Java-11-orange)
+![Static Badge](https://img.shields.io/badge/Maven-4.0.0-purple)
+![Static Badge](https://img.shields.io/badge/Spring_Boot-2.7.3-green)
+![Static Badge](https://img.shields.io/badge/MapStruct-1.5.5.Final-red)
+![Static Badge](https://img.shields.io/badge/Passay-1.6.4-darkgreen)
+![Static Badge](https://img.shields.io/badge/SpringDoc_OpenAPI_UI-1.7.0-brightgreen)
+![Static Badge](https://img.shields.io/badge/MySQL_Connector_Java-8.0.30-blue)
+![Static Badge](https://img.shields.io/badge/Lombok-1.18.24-red)
 
-### Development server
+>Spring Boot starter dependencies :  
+![Static Badge](https://img.shields.io/badge/Data_JPA-grey)
+![Static Badge](https://img.shields.io/badge/Web-grey)
+![Static Badge](https://img.shields.io/badge/Validation-grey)
+![Static Badge](https://img.shields.io/badge/OAuth2_Resource_Server-grey)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Getting started
 
-### Build
+### Clone the project
+Clone the project in the directory of your choice :
+>git clone https://github.com/CodeByGaetan/OrionMDD.git
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### MySQL
+- Install MySQL on the localhost and enable the service
+- Open a terminal in the directory : `/OrionMDD/back/src/main/resources/sql`
+- Connect to MySQL with the root user
+- Run `SOURCE reset_db.sql;` to create the database tables
+- Run `CREATE USER 'TheUsername'@'%' IDENTIFIED BY 'ThePassword';` to create the MySQL user for the app.
+The username and password must be the same than in the application.properties file.
+- Run `GRANT ALL ON mdddb.* to 'TheUsername'@'%';` to give MDD App database access to the new user
 
-### Where to start
+### Back-end
+- Open your IDE (VS Code, Eclipse, etc.) in the directory : `/OrionMDD/back`
+- In the file `application.properties` (located at : `/OrionMDD/back/src/main/resources`):
+  set the properties `spring.datasource.username` and `spring.datasource.password` with the same username and password than the previously defined MySQL user.
+- Run `mvn spring-boot:run` to launch the back-end in developpment mode
+- Or run `mvn package` to build the project and then run `java -jar target/mdd-api-0.0.1-SNAPSHOT.jar` to launch the built package.
+- Access to API Documentation : http://localhost:3000/swagger-ui/index.html
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
-
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
-
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
-
-Good luck!
-
-http://localhost:3000/swagger-ui/index.html
+### Front-end
+- Open your IDE (VS Code, Eclipse, etc.) in the directory : `/OrionMDD/front`
+- Run `npm install` to install the dependencies
+- Run `ng build` to build the project. The build artifacts will be stored in the `/OrionMDD/front/dist/` directory.
+- Run `ng serve` to start the front-end development server
+- To use the app, navigate to http://localhost:4200/

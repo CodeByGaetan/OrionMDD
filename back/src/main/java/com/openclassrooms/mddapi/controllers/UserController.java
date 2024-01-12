@@ -37,8 +37,9 @@ public class UserController {
     private UserMapper userMapper;
 
     /**
+     * Get the current user info
      * 
-     * @return
+     * @return the email and name of the current user
      */
     @Operation(summary = "Get the current user info")
     @GetMapping("/user")
@@ -49,9 +50,10 @@ public class UserController {
     }
 
     /**
+     * Update the current user info from a valid request
      * 
-     * @param userDto
-     * @return
+     * @param userDto The update request containing the new email and user name
+     * @return Ok status response
      */
     @Operation(summary = "Update the current user info")
     @PutMapping("/user")
@@ -65,9 +67,10 @@ public class UserController {
     }
     
     /**
+     * Subscribe the user to a topic
      * 
-     * @param id
-     * @return
+     * @param id The number identifying the topic we want to subscribe on
+     * @return The updated subscribed topics Ids list
      */
     @Operation(summary = "Subscribe the user to a topic")
     @Transactional
@@ -75,7 +78,6 @@ public class UserController {
     public ResponseEntity<?> subscribeTopic(@PathVariable Integer id) {
         try {
             userService.subscribeTopic(id);
-            // Return updated subscribed topic ids list
             return ResponseEntity.ok().body(userService.getSubscribedTopicIds());
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -83,9 +85,10 @@ public class UserController {
     }
 
     /**
+     * Unsubscribe the user to a topic
      * 
-     * @param id
-     * @return
+     * @param id The number identifying the topic we want to unsubscribe from
+     * @return The updated subscribed topics Ids list
      */
     @Operation(summary = "Unsubscribe the user to a topic")
     @Transactional
