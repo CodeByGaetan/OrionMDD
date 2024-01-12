@@ -36,9 +36,10 @@ public class AuthController {
     private Validator validator;
 
     /**
-     * 
-     * @param userDto
-     * @return
+     * Register and authenticate a new user
+     *  
+     * @param userDto containing a valid email, user name and password
+     * @return JWT token to authenticate future requests
      */
     @Operation(summary = "Sign up a user")
     @PostMapping("/auth/signup")
@@ -59,11 +60,12 @@ public class AuthController {
     }
 
     /**
+     * Authenticate an existing user from email or user name
      * 
-     * @param loginRequest
-     * @return
+     * @param loginRequest containing a valid email or user name and password
+     * @return JWT token to authenticate future requests
      */
-    @Operation(summary = "Sign in a user")
+    @Operation(summary = "Sign in a user with email or user name")
     @PostMapping("/auth/signin")
     public ResponseEntity<?> signIn(@RequestBody LoginRequest loginRequest) {
                
@@ -75,8 +77,6 @@ public class AuthController {
 
         if(!signInNotBlanckValid) {
             return ResponseEntity.badRequest().body(new AuthErrorResponse("One or more fields are empty", 0));
-
-        // Essayer de se connecter avec un email
         } else if (signInEmailValid) {
             try {
                 String jwtResponse = authService.signInWithEmail(loginRequest);
@@ -84,8 +84,6 @@ public class AuthController {
             } catch (AuthException e) {
                 return ResponseEntity.badRequest().body(new AuthErrorResponse(e.getMessage(), e.getCodeError()));
             }
-
-        // Essayer de se connecter avec un name
         } else {
             try {
                 String jwtResponse = authService.signInWithName(loginRequest);
@@ -93,7 +91,6 @@ public class AuthController {
             } catch (AuthException e) {
                 return ResponseEntity.badRequest().body(new AuthErrorResponse(e.getMessage(), e.getCodeError()));
             }
-
         }
     }
 

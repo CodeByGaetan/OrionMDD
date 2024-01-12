@@ -27,6 +27,13 @@ public class AuthService {
     @Autowired
     private JWTService jwtService;
 
+    /**
+     * Register and authenticate a new user
+     * 
+     * @param userDto containing the user email, name and password
+     * @return JWT token to authenticate the future requests
+     * @throws AuthException if the email or user name already exists in the database
+     */
     public String signUp(UserDto userDto) throws AuthException {
 
         if (userService.existsByEmail(userDto.getEmail())) {
@@ -58,6 +65,13 @@ public class AuthService {
         }
     }
 
+    /**
+     * Authenticate an existing user from its email
+     * 
+     * @param loginRequest containing the user email and password
+     * @return JWT token to authenticate the future requests
+     * @throws AuthException if the email is unknown or the password is incorrect
+     */
     public String signInWithEmail(LoginRequest loginRequest) throws AuthException {
 
         User user = userService.findByEmail(loginRequest.getUsername());
@@ -69,6 +83,13 @@ public class AuthService {
         return authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
     }
 
+    /**
+     * Authenticate an existing user from its name
+     * 
+     * @param loginRequest containing the user name and password
+     * @return JWT token to authenticate the future requests
+     * @throws AuthException if the name is unknown or the password is incorrect
+     */
     public String signInWithName(LoginRequest loginRequest) throws AuthException {
 
         User user = userService.findByName(loginRequest.getUsername());

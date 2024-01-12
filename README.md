@@ -1,27 +1,44 @@
-# P6-Full-Stack-reseau-dev
+# MDD - A developers social network
 
-## Front
+A complete web application, from Back-end to Front-end, to create a developers social network !
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+The Front-end uses :  
+![Static Badge](https://img.shields.io/badge/Angular-14.1.3-red)
 
-Don't forget to install your node_modules before starting (`npm install`).
+The Back-end uses :  
+![Static Badge](https://img.shields.io/badge/Java-17.0.9-orange)
+![Static Badge](https://img.shields.io/badge/Spring_Boot-2.6.1-green)
+![Static Badge](https://img.shields.io/badge/Maven-3.9.5-purple)
 
-### Development server
+## Getting started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Clone the project
+Clone the project in the directory of your choice :
+>git clone https://github.com/CodeByGaetan/OrionMDD.git
 
-### Build
+### MySQL
+- Install MySQL on the localhost and enable the service
+- Open a terminal in the directory : `/YogaApp/ressources/sql`
+- Connect to MySQL with the root user
+- Run `SOURCE reset_db.sql;` to create the database tables
+- Run `CREATE USER 'TheUsername'@'%' IDENTIFIED BY 'ThePassword';` to create the MySQL user for the app.
+The username and password must be the same than in the application.properties file.
+- Run `GRANT ALL ON yogadb.* to 'TheUsername'@'%';` to give YogaApp database access to the new user
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Back-end
+- Open your IDE (VS Code, Eclipse, etc.) in the directory : `/YogaApp/back`
+- In the file `application.properties` (located at : `/YogaApp/back/src/main/resources`):
+  set the properties `spring.datasource.username` and `spring.datasource.password` with the same username and password than the previously defined MySQL user.
+- Run `mvn spring-boot:run` to launch the back-end in developpment mode
+- Or run `mvn package` to build the project and then run `java -jar target/yoga-app-0.0.1-SNAPSHOT.jar` to launch the built package.
 
-### Where to start
-
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
-
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
-
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
-
-Good luck!
+### Front-end
+- Open your IDE (VS Code, Eclipse, etc.) in the directory : /YogaApp/front
+- Run `npm install` to install the dependencies
+- Run `ng serve` to start the front-end development server
+- To use the app, navigate to http://localhost:4200/
+- By default the admin account is:
+    - login: yoga@studio.com  
+    - password: test!1234
 
 http://localhost:3000/swagger-ui/index.html
