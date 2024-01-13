@@ -4,20 +4,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.others.validations.groups.UpdateUserValidation;
 import com.openclassrooms.mddapi.services.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,23 +42,6 @@ public class UserController {
         User user = userService.getCurrentUser();
 
         return ResponseEntity.ok().body(userMapper.toDto(user));
-    }
-
-    /**
-     * Update the current user info from a valid request
-     * 
-     * @param userDto The update request containing the new email and user name
-     * @return Ok status response
-     */
-    @Operation(summary = "Update the current user info")
-    @PutMapping("/user")
-    public ResponseEntity<?> updateCurrentUser(@Validated(UpdateUserValidation.class) @RequestBody UserDto userDto) {
-        try {
-            userService.updateCurrentUser(userDto);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
     
     /**

@@ -100,5 +100,42 @@ public class AuthService {
 
         return authenticateUser(user.getEmail(), loginRequest.getPassword());
     }
+
+    // Update User
+
+    /**
+     * Update the current user information
+     * 
+     * @param userDto The user info containing the new email and user name
+     * @return The updated user from the database
+     * @throws AuthException 
+     */
+    public String updateCurrentUser(UserDto userDto) throws AuthException {
+
+        User user = userService.getCurrentUser();
+
+        Boolean sameEmail = user.getEmail().equals(userDto.getEmail());
+        Boolean sameName = user.getName().equals(userDto.getName());
+
+        Boolean newEmailAlreadyExists = userService.existsByEmail(userDto.getEmail());
+        Boolean newNameAlreadyExists = userService.existsByName(userDto.getName());
+
+        if (sameEmail && sameName) {
+            return null;
+        } else if (!sameEmail && newEmailAlreadyExists && !sameName && newNameAlreadyExists) {
+            throw new AuthException("User name and Email already used", 3);
+        } else if (!sameEmail && newEmailAlreadyExists) {
+            throw new AuthException("Email already used", 1);
+        } else if (!sameName && newNameAlreadyExists) {
+            throw new AuthException("User name already used", 2);
+        }
+    
+        user.setEmail(userDto.getEmail());
+        user.setName(userDto.getName());
+
+        User savedUser = userService.saveUser(user);
+
+        return sameEmail ? null : jwtService.generateToken(savedUser.getEmail());
+    }
     
 }

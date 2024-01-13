@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import com.openclassrooms.mddapi.others.validations.groups.SignInEmailValidation
 import com.openclassrooms.mddapi.others.validations.groups.SignInNotBlanckValidation;
 import com.openclassrooms.mddapi.others.validations.groups.SignUpPasswordValidation;
 import com.openclassrooms.mddapi.others.validations.groups.SignUpValidation;
+import com.openclassrooms.mddapi.others.validations.groups.UpdateUserValidation;
 import com.openclassrooms.mddapi.services.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -91,6 +93,23 @@ public class AuthController {
             } catch (AuthException e) {
                 return ResponseEntity.badRequest().body(new AuthErrorResponse(e.getMessage(), e.getCodeError()));
             }
+        }
+    }
+
+    /**
+     * Update the current user info from a valid request
+     * 
+     * @param userDto The update request containing the new email and user name
+     * @return Ok status response
+     */
+    @Operation(summary = "Update the current user info")
+    @PutMapping("/auth/user")
+    public ResponseEntity<?> updateCurrentUser(@Validated(UpdateUserValidation.class) @RequestBody UserDto userDto) {
+        try {
+            String jwtResponse = authService.updateCurrentUser(userDto);
+            return ResponseEntity.ok().body(new AuthJwtResponse(jwtResponse));
+        } catch (AuthException e) {
+            return ResponseEntity.badRequest().body(new AuthErrorResponse(e.getMessage(), e.getCodeError()));
         }
     }
 
