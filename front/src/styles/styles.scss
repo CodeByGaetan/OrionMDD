@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// Right align the navigation links into the side navigation bar
+.mat-sidenav .mat-list-base .mat-list-item .mat-list-item-content {
+  justify-content: flex-end;
+}
+
+.error-snackbar {
+  color: red;
+  button {
+    color: white;
+  }
+}

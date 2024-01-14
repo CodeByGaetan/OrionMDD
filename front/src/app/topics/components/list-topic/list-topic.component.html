@@ -1,0 +1,24 @@
+<p *ngIf="onError" class="error">Erreur lors de la récupération de la liste des abonnements</p>
+<div class="container">
+  <mat-card *ngFor="let topic of topics">
+    <mat-card-title>{{ topic.title }}</mat-card-title>
+    <mat-card-content>{{ topic.description }}</mat-card-content>
+    <div class="spacer"></div>
+    <button
+      *ngIf="!subTopicIds.includes(topic.id)"
+      mat-raised-button
+      color="primary"
+      (click)="subscribe(topic.id)"
+    >
+      S'abonner
+    </button>
+    <button
+      *ngIf="subTopicIds.includes(topic.id)"
+      mat-raised-button
+      color="warn"
+      (click)="unSubscribe(topic.id)"
+    >
+      Se désabonner
+    </button>
+  </mat-card>
+</div>
