@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.repositories.PostRepository;
 
 @Service
@@ -28,7 +29,7 @@ public class PostService {
 
 
     /**
-     * Get page containing posts filtered by page number and page size and sorted by created date 
+     * Get page containing user subscribed posts filtered by page number and page size and sorted by created date 
      * 
      * @param page The page number requested
      * @param size The number of items per page
@@ -36,10 +37,15 @@ public class PostService {
      * @return The page containing the filtered posts
      */
     public Page<Post> getAllPagedSorted(Integer page, Integer size, Boolean asc) {
+
+        List<Topic> userTopics = userService.getCurrentUser().getTopics();
+
         Sort sort = asc ? Sort.by("createdAt").ascending() : Sort.by("createdAt").descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return postRepository.findAll(pageable);
+        Page<Post> pageResponse = postRepository.findByTopicIn(userTopics, pageable);
+
+        return pageResponse;
     }
 
     /**

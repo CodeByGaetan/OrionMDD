@@ -25,7 +25,4 @@ export class UserService {
     return this.httpClient.delete<number[]>(`${this.pathService}/topics/${topicId}`);
   }
 
-  public updateUser(userRequest: UserRequest): Observable<void> {
-    return this.httpClient.put<void>(this.pathService, userRequest);
-  }
 }

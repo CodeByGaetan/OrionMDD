@@ -7,19 +7,18 @@ import { Router } from '@angular/router';
 })
 export class SessionService {
 
-  public isLogged = false;
-  public sessionInformation: SessionInformation | undefined;
-
   constructor(private router: Router) { }
 
+  public getJwtToken(): String | null {
+    return localStorage.getItem('access_token');
+  }
+
   public logIn(sessionInformation: SessionInformation): void {
-    this.sessionInformation = sessionInformation;
-    this.isLogged = true;
+    localStorage.setItem('access_token', sessionInformation.token);
   }
 
   public logOut(): void {
-    this.sessionInformation = undefined;
-    this.isLogged = false;
+    localStorage.clear();
     this.router.navigateByUrl('/');
   }
 

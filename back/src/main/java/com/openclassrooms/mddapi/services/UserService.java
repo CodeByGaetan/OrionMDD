@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repositories.UserRepository;
@@ -21,10 +20,6 @@ public class UserService {
 
     @Autowired
     private TopicService topicService;
-
-    public User getById(Integer id) {
-        return userRepository.findById(id).orElse(null);
-    }
 
     /**
      * Get the current user, identified by the JWT token of the request
@@ -95,21 +90,6 @@ public class UserService {
     }
 
     /**
-     * Update the current user information
-     * 
-     * @param userDto The user info containing the new email and user name
-     * @return The updated user from the database
-     */
-    public User updateCurrentUser(UserDto userDto) {
-        User user = getCurrentUser();
-
-        user.setEmail(userDto.getEmail());
-        user.setName(userDto.getName());
-
-        return userRepository.save(user);
-    }
-
-    /**
      * Save the user in the database
      * 
      * @param user The user to save
@@ -158,5 +138,6 @@ public class UserService {
     public Boolean existsByName(String name) {
         return userRepository.existsByName(name);
     }
+
 
 }
