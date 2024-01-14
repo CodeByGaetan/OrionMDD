@@ -14,12 +14,13 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private sessionService: SessionService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-    if (this.sessionService.isLogged) {
+    
+    let token = this.sessionService.getJwtToken();
+    if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.sessionService.sessionInformation!.token}`,
-        },
+          Authorization: `Bearer ${token}`
+        }
       });
     }
     

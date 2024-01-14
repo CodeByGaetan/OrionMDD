@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
 
 @Injectable({
@@ -13,11 +12,13 @@ export class AuthGuard implements CanActivate {
     private sessionService: SessionService,
   ) { }
 
-  public canActivate(): boolean {
-    if (!this.sessionService.isLogged) {
+  public canActivate(): boolean {    
+    let token = this.sessionService.getJwtToken();
+    if(!token) {
       this.router.navigateByUrl('/home');
       return false;
     }
+
     return true;
   }
 

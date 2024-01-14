@@ -45,14 +45,15 @@ public class PostController {
     private CommentMapper commentMapper;
 
     /**
-     * Get all posts filtered by page number and page size and sorted by created date 
+     * Get all posts, subscribed by the user, and filtered by page number and page size and sorted by created date 
      * 
      * @param page The page number requested
      * @param size The number of items per page
      * @param asc Whether the articles are sorted in ascending order or in descending order
      * @return List of filtered posts and the total number of posts in the database 
      */
-    @Operation(summary = "Get all posts paged and sorted")
+    @Operation(summary = "Get all posts subscribed paged and sorted")
+    @Transactional
     @GetMapping("/posts")
     public ResponseEntity<?> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Boolean asc) {
 
